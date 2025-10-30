@@ -10,20 +10,9 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 
 
-role
-duties
-specialty
-
-
-
-def feed
-
-
-def clean
-
-
-def health_check
-
+role_required
+name
+description
 
 
 

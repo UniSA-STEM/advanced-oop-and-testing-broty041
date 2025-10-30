@@ -10,20 +10,19 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 
 
-role
-duties
-specialty
 
 
 
-def feed
+
+type
 
 
-def clean
+
+def generate_report
 
 
-def health_check
+    # list of anmials by species
 
-
+# status of all enclosures
 
 
