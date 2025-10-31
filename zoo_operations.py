@@ -39,8 +39,8 @@ class Zoo:
     def remove_enclosure(self, name):
         self.__enclosures.remove(name)
 
-    def assign_animal(self):
-
+    def assign_animal(self, enclosure, animal):
+        enclosure.add_occupant(animal)
 
 # assign_animal
 # unassign_animal

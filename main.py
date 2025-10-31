@@ -29,10 +29,19 @@ def basic_zoo_start():
 def zoo_operations():
     z1, l1, b1, f1 = basic_zoo_start()
 
+
+
+def processing_animals():
+    z1, l1, b1, f1 = basic_zoo_start()
+
+    print(f"\n--- Test adding/removing animal ---")
     z1.add_animal(l1)
     z1.print_animals()
     z1.remove_animal(l1)
     z1.print_animals()
+
+    print(f"\n--- Test adding/removing animal to enclosure ---")
+    z1.add_animal(l1)
 
 
 
@@ -46,5 +55,6 @@ def test_animal_abilities():
 
 
 # --- Main Testing Sequence ---
-zoo_operations()
+# zoo_operations()
 
+processing_animals()
