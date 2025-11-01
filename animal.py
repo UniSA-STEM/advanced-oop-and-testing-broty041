@@ -10,19 +10,36 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from abc import ABC, abstractmethod
 
 class Animal(ABC):
-    def __init__(self, name, species, age, gender, diet, animal_class):
+    def __init__(self, name, species, age, gender, diet, animal_class, environment):
         self.__name = name
         self.__species = species
         self.__age = age
         self.__gender = gender
         self.__diet = diet
         self.__animal_class = animal_class
+        self.__environment = environment
+        self.__movable = True
+
 
     def get_name(self):
         return self.__name
 
+    def get_movable(self):
+        return self.__movable
+
+    def set_movable(self, status):
+        self.__movable = status
+
+    def get_animal_class(self):
+        return self.__animal_class
+
+    def get_environment(self):
+        return self.__environment
 
     name = property(get_name)
+    movable = property(get_movable, set_movable)
+    animal_class = property(get_animal_class)
+    environment = property(get_environment)
 
     @abstractmethod
     def cry(self):
@@ -40,8 +57,8 @@ class Animal(ABC):
         pass
 
     def __str__(self):
-        return (f"Species: {self.__species}"
-                f"\nAnimal Class: {self.__animal_class}"
+        return (f"Animal Class: {self.__animal_class}"
+                f"\nSpecies: {self.__species}"
                 f"\nNickname: {self.__name}"
                 f"\nGender: {self.__gender}"
                 f"\nAge: {self.__age}"
@@ -53,8 +70,8 @@ class Animal(ABC):
 
 
 class Lion(Animal):
-    def __init__(self, name, species, age, gender, diet, animal_class):
-        super().__init__(name, species, age, gender, diet, animal_class)
+    def __init__(self, name, species, age, gender, diet, animal_class, environment):
+        super().__init__(name, species, age, gender, diet, animal_class, environment)
 
     def cry(self):
         print("*ROAAAARR!*")
@@ -72,8 +89,8 @@ class Lion(Animal):
 
 
 class Bird(Animal):
-    def __init__(self, name, species, age, gender, diet, animal_class, wing_span):
-        super().__init__(name, species, age, gender, diet, animal_class)
+    def __init__(self, name, species, age, gender, diet, animal_class, environment, wing_span):
+        super().__init__(name, species, age, gender, diet, animal_class, environment)
         self.__wing_span = wing_span
 
     def cry(self):
@@ -94,8 +111,8 @@ class Bird(Animal):
 
 
 class Fish(Animal):
-    def __init__(self, name, species, age, gender, diet, animal_class, scale_colours):
-        super().__init__(name, species, age, gender, diet, animal_class)
+    def __init__(self, name, species, age, gender, diet, animal_class, environment, scale_colours):
+        super().__init__(name, species, age, gender, diet, animal_class, environment)
         self.__scale_colours = scale_colours
 
     def cry(self):

@@ -9,21 +9,26 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 
 
-
-role
-duties
-specialty
-
-
-
-def feed
-
-
-def clean
-
-
-def health_check
+class Staff:
+    def __init__(self, role, specialty):
+        self.__role = role
+        self.__specialty = specialty
+        self.__duties = []
 
 
 
 
+
+# def feed
+#
+
+# connection between feed and eat
+#
+# def clean
+#
+#
+# def health_check
+#
+#
+#
+#

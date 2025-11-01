@@ -6,7 +6,7 @@ ID: 110454503
 Username: broty041
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
-import animal
+from animal import Animal
 
 class Zoo:
     def __init__(self, name):
@@ -14,38 +14,116 @@ class Zoo:
         self.__animals = []
         self.__enclosures = []
 
-
+    # Getters and setters
     def get_animals(self):
         return self.__animals
 
-    def print_animals(self):
+
+    # Animal Management
+    def find_animal(self, animal):
+        """
+        Find an animal with either a string or object as a parameter.
+        """
+        find_ref = animal.name if isinstance(animal, Animal) else animal
+        for a in self.__animals:
+            if a.name == find_ref:
+                return a
+        return None
+
+    def list_zoo_animals(self):
         print('--- Zoo Animals ---')
         if len(self.__animals) > 0:
             for a in self.get_animals():
-                print(f"{a}\n")
+                print(f"{a}"
+                      f"\n--------------------")
         else:
             print("Matt Damon would be disappointed, you need animals in "
                   "your zoo!")
 
-    def add_animal(self, name):
-        self.__animals.append(name)
+    def add_animal(self, animal):
+        """Perform validation and then add animal to the zoo."""
 
-    def remove_animal(self, name):
-        self.__animals.remove(name)
+        allow_add_animal = True
 
-    def add_enclosure(self, name):
-        self.__enclosures.append(name)
+        if not isinstance(animal, Animal):
+            print("Ensure animal object exists.")
+            allow_add_animal = False
 
-    def remove_enclosure(self, name):
-        self.__enclosures.remove(name)
+        if allow_add_animal and self.find_animal(animal):
+            print(f"{animal.name} already in holding pen. "
+                  f"They require assignment to an enclosure.")
+            allow_add_animal = False
 
-    def assign_animal(self, enclosure, animal):
-        enclosure.add_occupant(animal)
+        if allow_add_animal:
+            self.__animals.append(animal)
+            print(f"{animal.name} added to zoo holding pen, "
+                  f"awaiting assignment to enclosure.")
+            return True
 
-# assign_animal
-# unassign_animal
-#
-# move_animal
+        return False
+
+
+    def remove_animal(self, animal, enclosure):
+        """Perform validation and then remove animal from zoo."""
+        allow_remove_animal = True
+
+        if not self.find_animal(animal):
+            print(f"Animal is not in {enclosure.name}")
+            allow_remove_animal = False
+
+        if allow_remove_animal and animal.movable is False:
+            print("Animal is under treatment and cannot be moved.")
+            allow_remove_animal = False
+
+        if allow_remove_animal:
+            self.__animals.remove(animal)
+            print(f"{animal.name} removed from zoo holding pen.")
+            return True
+        return False
+
+    def add_enclosure(self, animal):
+        self.__enclosures.append(animal)
+
+    def remove_enclosure(self, animal):
+        self.__enclosures.remove(animal)
+
+    def assign_animal(self, animal, enclosure):
+        """Assign animal to an enclosure."""
+        if animal.movable:
+            enclosure.add_occupant(animal)
+        else:
+            print(f"{animal.name} is under treatment and cannot be moved.")
+
+    def unassign_animal(self, animal, enclosure):
+        """Perform validation and then unassign animal from an enclosure."""
+        if animal.movable:
+            enclosure.remove_occupant(animal)
+        else:
+            print(f"{animal.name} is under treatment and cannot be moved.")
+
+    def move_animal(self, animal, enclosure_from, enclosure_to):
+
+        allow_move = True
+
+        if not enclosure_to.is_animal_compatible(animal):
+            allow_move = False
+
+        if allow_move and not animal.movable:
+            print("Animal is under treatment and cannot be moved.")
+            allow_move = False
+
+        if allow_move:
+            print(f"Moving {animal.name} from {enclosure_from.name} to "
+                  f"{enclosure_to.name}:")
+            self.unassign_animal(animal, enclosure_from)
+            self.assign_animal(animal, enclosure_to)
+            return True
+        return False
+
+
+
+
+
 #     validation = does it have any pending cases that check box cant be moved
 
 
@@ -63,7 +141,9 @@ class Zoo:
 #
 
 #
-#
+# extracuricular
+
+# new arrivals quarantine
 # def enclosure_breach
 #
 #
