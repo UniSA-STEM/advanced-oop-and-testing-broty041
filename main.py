@@ -12,6 +12,8 @@ This is my own work as defined by the University's Academic Integrity Policy.
 import animal
 from enclosure import Enclosure
 from zoo_operations import Zoo
+import staff
+import task
 
 
 def start_zoo():
@@ -36,7 +38,21 @@ def start_zoo():
 
     enclosures = [lion_enc, bird_enc, fish_enc, bird2_enc]
 
-    return zoo1, animals, enclosures
+    # Staff
+    zk1 = staff.Zookeeper("Bobbery", "Zoo keeper", "Savannah", [lion_enc, bird_enc], )
+    vet1 = staff.Vet("Dr Harry", "Veterinarian", "Savannah", [lion_enc, fish_enc])
+
+    staff_list = [zk1, vet1]
+
+    # Tasks
+    feed_lion_enc = task.Feed("Feeding lions", "Feeding lions at the lion enclosure",["Veterinarian", "Zoo keeper"], lion_enc)
+    feed_bird_enc = task.Feed("Feeding birds", "Feeding birds at the bird enclosure",["Veterinarian", "Zoo keeper"], bird_enc)
+    feed_fish_enc = task.Feed("Feeding fish", "Feeding fish at the fish enclosure",["Veterinarian", "Zoo keeper"], fish_enc)
+    surgery = task.Surgery("Surgery", "Performs surgery.", ["Veterinarian"])
+
+    tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery]
+
+    return zoo1, animals, enclosures, staff_list, tasks
 
 
 # def zoo_operations():
@@ -132,18 +148,35 @@ def enclosure_restrictions(zoo, animals, enclosures):
     zoo.add_enclosure(bird2_enc)
     zoo.assign_animal(bird3, bird2_enc)
 
-def managing_staff(zoo, animals, enclosures):
+def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate staff methods."""
+    lion1, bird1, bird2, fish1, bird3 = animals
+    lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
+    zk1, vet1 = staff_list
+
+    print(f"\n--- Demo managing staff members. ---")
+
+    zk1.add_duty(feed_lion_enc)
+    zk1.role = "Zoo keeper"
+    zk1.add_duty(feed_lion_enc)
+    zk1.add_duty(surgery)
+
+    zoo.add_to_routine(zk1, feed_lion_enc, "Monday")
+    zoo.add_to_routine(vet1, feed_lion_enc, "Tuesday")
+
+    print(zoo.daily)
+
 
 
 
 def run_zoo_demonstration():
     # --- Main Demoing Sequence ---
-    zoo, animals, enclosures = start_zoo()
+    zoo, animals, enclosures, staff_list, tasks = start_zoo()
     # demo_animal_abilities(zoo, animals, enclosures)
     # managing_animals(zoo, animals, enclosures)
     # enclosure_restrictions(zoo, animals, enclosures)
-    managing_staff(zoo, animals, enclosures)
+    managing_staff(zoo, animals, enclosures, staff_list, tasks)
 
 
 if __name__ == "__main__":

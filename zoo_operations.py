@@ -13,10 +13,20 @@ class Zoo:
         self.__name = name
         self.__animals = []
         self.__enclosures = []
+        self.__daily_routines = {"Monday": [],
+                                 "Tuesday": [],
+                                 "Wednesday": [],
+                                 "Thursday": [],
+                                 "Friday": []}
 
     # Getters and setters
     def get_animals(self):
         return self.__animals
+
+    def get_daily_routines(self):
+        return self.__daily_routines
+
+    daily = property(get_daily_routines)
 
 
     # Animal Management
@@ -102,7 +112,7 @@ class Zoo:
             print(f"{animal.name} is under treatment and cannot be moved.")
 
     def move_animal(self, animal, enclosure_from, enclosure_to):
-
+        """Perform validation then move animal between enclosures."""
         allow_move = True
 
         if not enclosure_to.is_animal_compatible(animal):
@@ -121,6 +131,17 @@ class Zoo:
         return False
 
 
+    def add_to_routine(self, staff, task, day):
+        allow_add_to_routine = True
+
+        if task not in staff.duties:
+            print(f"This task is not in {staff.name}'s official list of duties.")
+            allow_add_to_routine = False
+
+        if allow_add_to_routine:
+            self.daily[day].append((staff, task))
+            return True
+        return False
 
 
 

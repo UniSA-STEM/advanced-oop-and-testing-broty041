@@ -7,21 +7,31 @@ Username: broty041
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
+from abc import ABC, abstractmethod
+
+
+class Report(ABC):
+    def __init__(self):
+
+
+    @abstractmethod
+    def generate_report(self):
+        pass
+
+
+class DailyRoutineReport(Report):
+    def __init__(self):
+        super().__init__()
+
+    def generate_report(self):
 
 
 
 
 
+# list of daily routines
 
-
-type
-
-
-
-def generate_report
-
-
-    # list of anmials by species
+# list of anmials by species
 
 # status of all enclosures
 
