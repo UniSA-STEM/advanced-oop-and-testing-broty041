@@ -65,10 +65,51 @@ class AnimalsBySpecies(Report):
         super().__init__(name)
 
     def generate_report(self, zoo):
-        for o in zoo.animals
+        print("\n-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-\n"
+              "-=-=-   List of Zoo Animals by Species  -=-=-"
+              "\n-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-")
+        animals_dict = {}
+        for a in zoo.animals:
+            if a.species not in animals_dict:
+                animals_dict[a.species] = [a]
+            else:
+                animals_dict[a.species].append(a)
 
-# list of anmials by species
+        sorted_dict = dict(sorted(animals_dict.items()))
 
-# status of all enclosures
+        temp = ""
+        for species, animals in sorted_dict.items():
+            print(f"        --- {species} ---")
+            for a in animals:
+                print(f"--------------------------------"
+                      f"\nNickname: {a.name}"
+                      f"\nAnimal Class: {a.animal_class}"
+                      f"\nGender: {a.gender}"
+                      f"\nAge: {a.age}"
+                      f"\nDiet: {a.diet}"
+                      f"\nEnvironment: {a.environment}"
+                      f"\n--------------------------------")
 
+
+class StatusAllEnclosures(Report):
+    def __init__(self, name):
+        super().__init__(name)
+
+
+    def generate_report(self, zoo):
+        print("\n-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-\n"
+              "-=-=-      Status of All Enclosures     -=-=-"
+              "\n-=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=--=-=-")
+        enclosures_list = []
+        for enclosure in zoo.enclosures:
+            if enclosure not in enclosures_list:
+                enclosures_list.append(enclosure)
+
+        for enclosure in enclosures_list:
+            print(f"--- {enclosure.name}: ---"
+                  f"\nStatus: {enclosure.status}")
+
+
+            occupants_enc = ", ".join(str(occupant.name) for occupant in enclosure.occupants)
+            print(f"Occupants: {occupants_enc if occupants_enc else 'None'}\n")
 

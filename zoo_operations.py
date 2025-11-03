@@ -8,7 +8,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 from animal import Animal
 from health_record import HealthRecord
-from report import DailyRoutines, AnimalsBySpecies
+from report import DailyRoutines, AnimalsBySpecies, StatusAllEnclosures
 
 
 class Zoo:
@@ -33,9 +33,13 @@ class Zoo:
     def get_reports(self):
         return self.__reports
 
+    def get_enclosures(self):
+        return self.__enclosures
+
     animals = property(get_animals)
     daily = property(get_daily_routines)
     reports = property(get_reports)
+    enclosures = property(get_enclosures)
 
 
     # Animal Management
@@ -100,11 +104,11 @@ class Zoo:
             return True
         return False
 
-    def add_enclosure(self, animal):
-        self.__enclosures.append(animal)
+    def add_enclosure(self, enclosure):
+        self.__enclosures.append(enclosure)
 
-    def remove_enclosure(self, animal):
-        self.__enclosures.remove(animal)
+    def remove_enclosure(self, enclosure):
+        self.__enclosures.remove(enclosure)
 
     def assign_animal(self, animal, enclosure):
         """Assign animal to an enclosure."""
@@ -172,28 +176,26 @@ class Zoo:
     def populate_reports(self):
         reports = []
         reports.append(DailyRoutines("Daily Routine Report"))
-        reports.append(AnimalsBySpecies("Animals By Species"))
+        reports.append(AnimalsBySpecies("Animals by Species"))
+        reports.append(StatusAllEnclosures("Status of All Enclosures"))
+
+
 
         return reports
 
     def display_report_interface(self):
-
+        print(f"\n--- Initiating Report Interface ---"
+              f"\nPlease select from reports below:\n")
         for i, report in enumerate(self.reports):
             print(f"{i + 1}. {report.name}")
 
-        report_choice = int(input(("Enter number: ")))
+        # report_choice = int(input(("Enter number: ")))
+        report_choice = 3
 
         self.reports[report_choice - 1].generate_report(self)
 
 
 
-
-        # dict1[(len(dict1) + 1)] = HealthRecord(animal, new_record_id, description, record_type, date, status, severity_level, treatment_plan, notes)
-        #
-        # new_record_id = record_id + 1
-        # new_record_name = f"Record{new_record_id}"
-        # new_record_name = HealthRecord(animal, new_record_id, description, record_type, date, status, severity_level, treatment_plan, notes)
-        # return new_record_name
 
 
 #     validation = does it have any pending cases that check box cant be moved

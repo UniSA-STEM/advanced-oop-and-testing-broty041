@@ -51,6 +51,12 @@ class Enclosure:
     def set_feed_available(self, status):
         self.__feed_available = status
 
+    def get_enclosure_status(self):
+        return self.__enclosure_status
+
+    def set_enclosure_status(self, status):
+        self.__enclosure_status = status
+
 
 
     name = property(get_name)
@@ -60,6 +66,7 @@ class Enclosure:
     occupants = property(get_occupants)
     environment = property(get_environment)
     feed = property(get_feed_available, set_feed_available)
+    status = property(get_enclosure_status, set_enclosure_status)
 
 
     # Validation Methods
@@ -140,6 +147,8 @@ class Enclosure:
         if allow_assign_animal:
             self.__occupants.append(animal)
             print(f"{animal.name} assigned to {self.name}.")
+            if self.status is "Empty":
+                self.status = "Occupied"
             return True
         return False
 
@@ -168,6 +177,8 @@ class Enclosure:
 
     def __str__(self):
         return f"{self.__name}"
+
+
 
 
 

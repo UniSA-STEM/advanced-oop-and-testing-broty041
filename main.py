@@ -26,12 +26,13 @@ def start_zoo():
     bird1 = animal.Bird("Birdy", "Galah", 10, "Female", "Omnivore", "Bird", "Amazon", 10)
     bird2 = animal.Bird("Polly", "Toucan", 5, "Male", "Omnivore", "Bird", "Amazon", 10)
     bird3 = animal.Bird("Pingu", "Penguin", 5, "Male", "Carnivore", "Bird", "Arctic", 10)
-    fish1 = animal.Fish("Old Ironjaw", "Trout", 3, "Male", "Omnivore", "Fish", "Tropical", 69)
+    bird4 = animal.Bird("Sangief", "Galah", 4, "Male", "Omnivore", "Bird", "Amazon", 10)
+    fish1 = animal.Fish("Old Ironjaw", "Trout", 3, "Male", "Omnivore", "Fish", "Tropical", ["yellow", "blue"])
 
-    animals = [lion1, bird1, bird2, fish1, bird3]
+    animals = [lion1, bird1, bird2, fish1, bird3, bird4]
 
     # Enclosures
-    lion_enc = Enclosure("Lion ENC 1", 2, "Savannah", "Lion", "Empty")
+    lion_enc = Enclosure("Lion ENC 1", 2, "Savannah", "Mammal", "Empty")
     bird_enc = Enclosure("Bird ENC 1",50, "Amazon", "Bird", "Empty")
     bird2_enc = Enclosure("Bird ENC 2",50, "Arctic", "Bird", "Empty")
     fish_enc = Enclosure("Fish ENC 1",100, "Tropical", "Fish", "Empty")
@@ -150,7 +151,7 @@ def enclosure_restrictions(zoo, animals, enclosures):
 
 def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate staff methods."""
-    lion1, bird1, bird2, fish1, bird3 = animals
+    lion1, bird1, bird2, fish1, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
     feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
     zk1, vet1 = staff_list
@@ -186,10 +187,27 @@ def health_record_system(zoo, animals, enclosures, staff_list, tasks):
 
 def generate_reports(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate usage of zoo operations reports."""
-    lion1, bird1, bird2, fish1, bird3 = animals
+    lion1, bird1, bird2, fish1, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
     feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
     zk1, vet1 = staff_list
+
+    for e in enclosures:
+        zoo.add_enclosure(e)
+
+    zoo.add_animal(bird1)
+    zoo.assign_animal(bird1, bird_enc)
+    zoo.add_animal(bird2)
+    zoo.assign_animal(bird2, bird_enc)
+
+    zoo.add_animal(bird3)
+    zoo.assign_animal(bird3, bird2_enc)
+
+    zoo.add_animal(lion1)
+    zoo.assign_animal(lion1, lion_enc)
+
+    zoo.add_animal(fish1)
+
 
     managing_staff(zoo, animals, enclosures, staff_list, tasks)
     zoo.display_report_interface()

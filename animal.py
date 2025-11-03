@@ -40,12 +40,30 @@ class Animal(ABC):
     def get_health_records(self):
         return self.__health_records
 
+    def get_species(self):
+        return self.__species
+
+    def get_gender(self):
+        return self.__gender
+
+    def get_diet(self):
+        return self.__diet
+
+    def get_age(self):
+        return self.__age
+
+
 
     name = property(get_name)
     movable = property(get_movable, set_movable)
     animal_class = property(get_animal_class)
     environment = property(get_environment)
     record = property(get_health_records)
+    species = property(get_species)
+    gender = property(get_gender)
+    diet = property(get_diet)
+    age = property(get_age)
+
 
 
     @abstractmethod
@@ -89,6 +107,8 @@ class Animal(ABC):
                 f"\nGender: {self.__gender}"
                 f"\nAge: {self.__age}"
                 f"\nDiet: {self.__diet}")
+
+
 
 
 
