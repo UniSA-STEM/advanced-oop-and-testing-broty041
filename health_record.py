@@ -7,20 +7,29 @@ Username: broty041
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
+from abc import ABC, abstractmethod
+
+
+class HealthRecord(ABC):
+    def __init__(self, name, description, record_type, date, severity_level, treatment_plan, notes):
+        self.__name = name
+        self.__description = description
+        self.__record_type = record_type
+        self.__date = date
+        self.__severity_level = severity_level
+        self.__treatment_plan = treatment_plan
+        self.__notes = notes
 
 
 
-health_issue
-case_type
-    injury
-    illness
-    behavioural
-        description
-date
-security_level
-treatment_plan
-Notes
+# a health record impacts movable
+
+# record_type
+#     injury
+#     illness
+#     behavioural
 
 
-current_case
-case_history
+
+def current_case
+def case_history
