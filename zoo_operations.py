@@ -7,6 +7,9 @@ Username: broty041
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 from animal import Animal
+from health_record import HealthRecord
+from report import DailyRoutines, AnimalsBySpecies
+
 
 class Zoo:
     def __init__(self, name):
@@ -18,6 +21,7 @@ class Zoo:
                                  "Wednesday": [],
                                  "Thursday": [],
                                  "Friday": []}
+        self.__reports = self.populate_reports()
 
     # Getters and setters
     def get_animals(self):
@@ -26,7 +30,12 @@ class Zoo:
     def get_daily_routines(self):
         return self.__daily_routines
 
+    def get_reports(self):
+        return self.__reports
+
+    animals = property(get_animals)
     daily = property(get_daily_routines)
+    reports = property(get_reports)
 
 
     # Animal Management
@@ -43,7 +52,7 @@ class Zoo:
     def list_zoo_animals(self):
         print('--- Zoo Animals ---')
         if len(self.__animals) > 0:
-            for a in self.get_animals():
+            for a in self.animals:
                 print(f"{a}"
                       f"\n--------------------")
         else:
@@ -144,21 +153,58 @@ class Zoo:
         return False
 
 
-    def generate_health_record(self, animal, record_name, description, record_type, date, status, severity_level, treatment_plan, notes):
+    def generate_health_record(self, animal, description, record_type, date,
+                               status, severity_level, treatment_plan, notes):
 
+        if len(animal.record) == 0:
+            dict_first = f"{animal.name}1"
+            animal.add_health_record(dict_first, HealthRecord(
+                description, record_type, date, status,
+                severity_level, treatment_plan, notes))
+        else:
+            dict_next_record = f"{animal.name}{len(animal.record) + 1}"
+            animal.add_health_record(dict_next_record, HealthRecord(
+                description, record_type, date, status,
+                severity_level, treatment_plan, notes))
+
+
+
+    def populate_reports(self):
+        reports = []
+        reports.append(DailyRoutines("Daily Routine Report"))
+        reports.append(AnimalsBySpecies("Animals By Species"))
+
+        return reports
+
+    def display_report_interface(self):
+
+        for i, report in enumerate(self.reports):
+            print(f"{i + 1}. {report.name}")
+
+        report_choice = int(input(("Enter number: ")))
+
+        self.reports[report_choice - 1].generate_report(self)
+
+
+
+
+        # dict1[(len(dict1) + 1)] = HealthRecord(animal, new_record_id, description, record_type, date, status, severity_level, treatment_plan, notes)
+        #
+        # new_record_id = record_id + 1
+        # new_record_name = f"Record{new_record_id}"
+        # new_record_name = HealthRecord(animal, new_record_id, description, record_type, date, status, severity_level, treatment_plan, notes)
+        # return new_record_name
 
 
 #     validation = does it have any pending cases that check box cant be moved
 
-
-# add_staff
+#remove_routine
 # remove_staff
-#
+# remove anything else
 
 #
 #
-# daily_routines
-#       list of routines = taking a staff and one of their tasks and storing it
+
 
 #
 

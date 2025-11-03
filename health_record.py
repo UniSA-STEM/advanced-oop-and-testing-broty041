@@ -11,8 +11,8 @@ from abc import ABC, abstractmethod
 
 
 class HealthRecord(ABC):
-    def __init__(self, h_id, description, record_type, date, status, severity_level, treatment_plan, notes):
-        self.__h_id = h_id
+    def __init__(self, description, record_type, date, status, severity_level, treatment_plan, notes):
+        self.__record_id = ""
         self.__description = description
         self.__record_type = record_type
         self.__date = date
@@ -26,18 +26,34 @@ class HealthRecord(ABC):
     def get_severity_level(self):
         return self.__severity_level
 
+    def get_record_id(self):
+        return self.__record_id
+
+    def set_record_id(self, new_record_id):
+        self.__record_id = new_record_id
+
+    def get_status(self):
+        return self.__status
+
+    def get_date(self):
+        return self.__date
+
+    def get_description(self):
+        return self.__description
+
+
+    record_id = property(get_record_id, set_record_id)
+    status = property(get_status)
     severity = property(get_severity_level)
+    date = property(get_date)
+    description = property(get_description)
+
+
+    def __repr__(self):
+        return f"{self.__description}{self.__status}"
 
 
 
-# a health record impacts movable
 
-# record_type
-#     injury
-#     illness
-#     behavioural
-
-
-#
 # def current_case
 # def case_history

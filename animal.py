@@ -19,7 +19,7 @@ class Animal(ABC):
         self.__animal_class = animal_class
         self.__environment = environment
         self.__movable = True
-        self.__health_records = []
+        self.__health_records = {}
 
 
     def get_name(self):
@@ -62,15 +62,23 @@ class Animal(ABC):
         pass
 
 
-    def update_movability(self, record):
-        for r in self.record:
-            if r.status == "Active" and r.severity > 2:
-                self.movable = False
+    def update_movability(self):
+        for r, v in self.record.items():
+            if v.status == "Active" and v.severity > 2:
+                if self.movable:
+                    self.movable = False
+                    print(f"{self.name} is {"not movable" 
+                    if self.movable is False else "movable"} "
+                          f"due to "
+                          f"'{v.description}' - {v.date}")
 
 
-    def add_health_record(self, record):
-        self.__health_records.append(record)
-        self.update_movability(record)
+    def add_health_record(self, new_record_id, record):
+        self.__health_records[new_record_id] = record
+        record.record_id = new_record_id
+        print(f"Health record added to {self.name}")
+        self.update_movability()
+
 
 
 

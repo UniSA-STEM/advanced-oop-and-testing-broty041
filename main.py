@@ -163,12 +163,36 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     zk1.add_duty(surgery)
 
     zoo.add_to_routine(zk1, feed_lion_enc, "Monday")
+    zoo.add_to_routine(zk1, feed_lion_enc, "Monday")
     zoo.add_to_routine(vet1, feed_lion_enc, "Tuesday")
 
     print(zoo.daily)
 
 
+def health_record_system(zoo, animals, enclosures, staff_list, tasks):
+    """Demonstrate usage of health record system."""
+    lion1, bird1, bird2, fish1, bird3 = animals
+    lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
+    zk1, vet1 = staff_list
 
+
+    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury", "03/11/25", "Active", 3, "Belly rubs.", "Ate peanuts.")
+    zoo.generate_health_record(lion1, "Runny nose", "Illness", "04/11/25", "Active", 2, "Vicks rubs.", "Needs tissues.")
+    zoo.generate_health_record(bird1, "Swooping", "Behavioural", "04/11/25", "Active", 3, "Cold water.",
+                               "Aggressively swooping visitors.")
+
+
+
+def generate_reports(zoo, animals, enclosures, staff_list, tasks):
+    """Demonstrate usage of zoo operations reports."""
+    lion1, bird1, bird2, fish1, bird3 = animals
+    lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
+    zk1, vet1 = staff_list
+
+    managing_staff(zoo, animals, enclosures, staff_list, tasks)
+    zoo.display_report_interface()
 
 def run_zoo_demonstration():
     # --- Main Demoing Sequence ---
@@ -176,7 +200,9 @@ def run_zoo_demonstration():
     # demo_animal_abilities(zoo, animals, enclosures)
     # managing_animals(zoo, animals, enclosures)
     # enclosure_restrictions(zoo, animals, enclosures)
-    managing_staff(zoo, animals, enclosures, staff_list, tasks)
+    # managing_staff(zoo, animals, enclosures, staff_list, tasks)
+    # health_record_system(zoo, animals, enclosures, staff_list, tasks)
+    generate_reports(zoo, animals, enclosures, staff_list, tasks)
 
 
 if __name__ == "__main__":
