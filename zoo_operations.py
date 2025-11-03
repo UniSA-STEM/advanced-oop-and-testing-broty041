@@ -144,6 +144,9 @@ class Zoo:
         return False
 
 
+    def generate_health_record(self, animal, record_name, description, record_type, date, status, severity_level, treatment_plan, notes):
+
+
 
 #     validation = does it have any pending cases that check box cant be moved
 

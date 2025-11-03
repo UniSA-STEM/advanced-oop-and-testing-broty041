@@ -19,6 +19,7 @@ class Animal(ABC):
         self.__animal_class = animal_class
         self.__environment = environment
         self.__movable = True
+        self.__health_records = []
 
 
     def get_name(self):
@@ -36,16 +37,20 @@ class Animal(ABC):
     def get_environment(self):
         return self.__environment
 
+    def get_health_records(self):
+        return self.__health_records
+
+
     name = property(get_name)
     movable = property(get_movable, set_movable)
     animal_class = property(get_animal_class)
     environment = property(get_environment)
+    record = property(get_health_records)
+
 
     @abstractmethod
     def cry(self):
-
         pass
-
 
     @abstractmethod
     def eat(self):
@@ -55,6 +60,19 @@ class Animal(ABC):
     @abstractmethod
     def sleep(self):
         pass
+
+
+    def update_movability(self, record):
+        for r in self.record:
+            if r.status == "Active" and r.severity > 2:
+                self.movable = False
+
+
+    def add_health_record(self, record):
+        self.__health_records.append(record)
+        self.update_movability(record)
+
+
 
     def __str__(self):
         return (f"Animal Class: {self.__animal_class}"
