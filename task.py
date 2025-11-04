@@ -9,6 +9,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 from abc import ABC, abstractmethod
 
 
+
 class Task(ABC):
     def __init__(self, name, description, roles=None, assigned_enclosure=None):
         self.__name = name
@@ -31,9 +32,8 @@ class Task(ABC):
     enclosure = property(get_assigned_enclosure)
 
     @abstractmethod
-    def action(self):
+    def perform_action(self):
         pass
-
 
     def __str__(self):
         return f"{self.__name}"
@@ -46,18 +46,37 @@ class Feed(Task):
     def __init__(self, name, description, roles=None, assigned_enclosure=None):
         super().__init__(name, description, roles, assigned_enclosure)
 
-    def action(self):
+    def perform_action(self):
         self.enclosure.feed_animals()
 
 
 
 
-class Surgery(Task):
-    def __init__(self, name, description, roles=None, assigned_enclosure=None):
-        super().__init__(name, description, roles, assigned_enclosure)
 
-    def action(self):
-        print("Performs surgery.")
+
+class Surgery(Task):
+    def __init__(self, name, description, roles, animal):
+        super().__init__(name, description, roles, assigned_enclosure=None)
+        self.__animal = animal
+
+    def get_animal(self):
+        return self.__animal
+
+    def get_health_record(self):
+        return self.__health_record
+
+    animal = property(get_animal)
+
+    def perform_action(self):
+
+
+        if self.animal.requires_surgery():
+            print(f"Surgery is performed on {self.animal.name} the "
+                  f"{self.animal.species}")
+        else:
+            print(f"{self.animal.name} the {self.animal.species} does not "
+                  f"need surgery. Please confirm with Veterinarian.")
+
 
 
 

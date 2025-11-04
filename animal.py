@@ -9,6 +9,9 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 from abc import ABC, abstractmethod
 
+import random
+
+
 class Animal(ABC):
     def __init__(self, name, species, age, gender, diet, animal_class, environment):
         self.__name = name
@@ -97,6 +100,17 @@ class Animal(ABC):
         print(f"Health record added to {self.name}")
         self.update_movability()
 
+
+    def requires_surgery(self):
+        for record in self.record.values():
+            if record.plan == "Surgery" and record.status == "Active":
+                return True
+        return False
+
+
+    def finding_health_problems(self):
+        """Simulates a health check with 20% chance of finding an issue."""
+        print
 
 
 

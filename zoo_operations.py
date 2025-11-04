@@ -68,6 +68,16 @@ class Zoo:
             print("Matt Damon would be disappointed, you need animals in "
                   "your zoo!")
 
+    def list_staff(self):
+        print('--- Zoo Staff ---')
+        if len(self.__staff) > 0:
+            for s in self.staff:
+                print(f"{s}"
+                      f"\n--------------------")
+        else:
+            print("You probably need some staff.")
+
+
     def add_animal(self, animal):
         """Perform validation and then add animal to the zoo."""
 
@@ -155,9 +165,32 @@ class Zoo:
 
     def add_staff(self, staff):
         self.staff.append(staff)
+        print(f"{staff.name} the {staff.role} has been added to the Zoo.")
 
     def remove_staff(self, staff):
-        self.staff.append(staff)
+        self.staff.remove(staff)
+        print(f"{staff.name} the {staff.role} has been removed from the Zoo.")
+
+    def add_task(self, staff, task):
+
+        if staff.add_task(task):
+            print(f"Task '{task.name}' added to {staff.name}'s official duties.")
+
+    def remove_task(self, staff, task):
+        if staff.remove_task(task):
+            print(f"Task '{task.name}' removed from {staff.name}'s official duties.")
+        else:
+            print(f"Task '{task.name}' is not listed in {staff.name}'s official duties.")
+
+    def assign_staff_enclosure(self, staff, enclosure):
+        if staff.assign_enclosure(enclosure):
+            print(f"{staff.name} assigned to {enclosure.name}")
+
+    def unassign_staff_enclosure(self, staff, enclosure):
+        if staff.unassign_enclosure(enclosure):
+            print(f"{staff.name} unassigned from {enclosure.name}")
+
+
 
     def add_to_routine(self, staff, task, day):
         allow_add_to_routine = True

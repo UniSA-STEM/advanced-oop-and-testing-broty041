@@ -41,12 +41,16 @@ class HealthRecord(ABC):
     def get_description(self):
         return self.__description
 
+    def get_treatment_plan(self):
+        return self.__treatment_plan
+
 
     record_id = property(get_record_id, set_record_id)
     status = property(get_status)
     severity = property(get_severity_level)
     date = property(get_date)
     description = property(get_description)
+    plan = property(get_treatment_plan)
 
 
     def __repr__(self):

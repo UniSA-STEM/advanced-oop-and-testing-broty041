@@ -97,10 +97,25 @@ class Enclosure:
     # Enclosure management
 
     def feed_animals(self):
-        if not self.feed:
+        allow_feed_animals = True
+
+        if self.feed:
+            print(f"Animals already have food.")
+            allow_feed_animals = False
+
+        if allow_feed_animals and self.clean < 5:
+            print("Cannot feed animals, enclosure is too dirty.")
+            allow_feed_animals = False
+
+        if allow_feed_animals:
             self.feed = True
-        else:
-            print(f"{self.enclosure_class} already have food.")
+            self.clean -= 3
+            print(f"Animals fed. Enclosure is a little messier "
+                  f"after feeding time.")
+            return True
+        return False
+
+
 
     def list_enc_animals(self):
         print(f'--- {self.name} Occupants ---')
