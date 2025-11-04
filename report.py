@@ -21,7 +21,7 @@ class Report(ABC):
     name = property(get_name)
 
     @abstractmethod
-    def generate_report(self):
+    def generate_report(self, zoo):
         pass
 
 

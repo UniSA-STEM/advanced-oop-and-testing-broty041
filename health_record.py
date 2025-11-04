@@ -7,10 +7,9 @@ Username: broty041
 This is my own work as defined by the University's Academic Integrity Policy.
 '''
 
-from abc import ABC, abstractmethod
 
 
-class HealthRecord(ABC):
+class HealthRecord:
     def __init__(self, description, record_type, date, status, severity_level, treatment_plan, notes):
         self.__record_id = ""
         self.__description = description
@@ -63,7 +62,3 @@ class HealthRecord(ABC):
         return f"{self.__description}{self.__status}"
 
 
-
-
-# def current_case
-# def case_history

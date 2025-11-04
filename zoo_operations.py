@@ -109,6 +109,18 @@ class Zoo:
             print(f"Animal is not in {enclosure.name}")
             allow_remove_animal = False
 
+        if allow_remove_animal:
+            routine_dependencies = self.check_routine_dependencies_animal(animal)
+            if routine_dependencies:
+                print(f"Cannot remove {animal.name}. Animal is assigned to daily routines: {routine_dependencies}")
+                allow_remove_animal = False
+
+        if allow_remove_animal:
+            staff_dependencies = self.check_animal_dependencies_staff(animal)
+            if staff_dependencies:
+                print(f"Cannot remove {animal.name}. Animal is assigned to staff tasks: {staff_dependencies}")
+                allow_remove_animal = False
+
         if allow_remove_animal and animal.movable is False:
             print("Animal is under treatment and cannot be moved.")
             allow_remove_animal = False
@@ -118,6 +130,26 @@ class Zoo:
             print(f"{animal.name} removed from zoo holding pen.")
             return True
         return False
+
+
+    def check_routine_dependencies_animal(self,animal):
+        found_days = []
+        for day, routines in self.daily.items():
+            for staff, task in routines:
+                if task.animal and task.animal.name == animal.name:
+                    found_days.append(f"{day} ({staff.name}: {task.name})")
+        return ", ".join(found_days) if found_days else None
+
+    def check_animal_dependencies_staff(self, animal):
+        found_list = []
+        for s in self.staff:
+            for task in s.tasks:
+                if task.animal == animal:
+                    if task.name not in found_list:
+                        found_list.append(task.name)
+        return ", ".join(found_list) if found_list else None
+
+
 
     def assign_animal(self, animal, enclosure):
         """Assign animal to an enclosure."""
@@ -137,7 +169,7 @@ class Zoo:
         """Perform validation then move animal between enclosures."""
         allow_move = True
 
-        if not enclosure_to.is_animal_compatible(animal):
+        if not enclosure_to.can_accept_animal(animal):
             allow_move = False
 
         if allow_move and not animal.movable:
@@ -155,14 +187,52 @@ class Zoo:
     # Enclosure management
     def add_enclosure(self, enclosure):
         self.__enclosures.append(enclosure)
+        print(f"{enclosure.name} added to the zoo.")
 
     def remove_enclosure(self, enclosure):
+        allow_remove_enclosure = True
+
+
+        if allow_remove_enclosure:
+            routine_dependencies = self.check_routine_dependencies_enclosure(enclosure)
+            if routine_dependencies:
+                print(f"Cannot remove {enclosure.name}. Enclosure is assigned to a related daily routine: {routine_dependencies}")
+                allow_remove_enclosure = False
+
+        if allow_remove_enclosure:
+            enc_dependencies = self.check_enclosure_dependencies_staff(enclosure)
+            if enc_dependencies:
+                print(f"Cannot remove {enclosure.name}. Enclosure is assigned to a related daily routine: {enc_dependencies}")
+                allow_remove_enclosure = False
+
+
         if enclosure.occupants:
             print(f"Cannot remove enclosure. {enclosure.name} still has occupants!")
-        else:
-            self.__enclosures.remove(enclosure)
-            print(f"{enclosure.name} has been removed from the zoo.")
+            allow_remove_enclosure = False
 
+        if allow_remove_enclosure:
+            self.enclosures.remove(enclosure)
+            print(f"{enclosure.name} has been removed from the zoo.")
+            return True
+        return False
+
+
+    def check_enclosure_dependencies_staff(self, enclosure):
+        found_list = []
+        for s in self.staff:
+            for enc in s.enclosures:
+                if enc == enclosure:
+                    if enc.name not in found_list:
+                        found_list.append(enc.name)
+        return ", ".join(found_list) if found_list else None
+
+    def check_routine_dependencies_enclosure(self, enclosure):
+        found_days = []
+        for day, routines in self.daily.items():
+            for staff, task in routines:
+                if task.enclosure and task.enclosure.name == enclosure.name:
+                    found_days.append(f"{day} ({staff.name}: {task.name})")
+        return ", ".join(found_days) if found_days else None
 
 
     # Staff management
@@ -187,26 +257,40 @@ class Zoo:
             print(f"Task '{task.name}' is not listed in {staff.name}'s official duties.")
 
     def assign_staff_enclosure(self, staff, enclosure):
-        if staff.assign_enclosure(enclosure):
+        if enclosure in self.enclosures:
+            staff.assign_enclosure(enclosure)
             print(f"{staff.name} assigned to {enclosure.name}")
+        else:
+            print(f"Enclosure doesn't exist at the zoo")
 
     def unassign_staff_enclosure(self, staff, enclosure):
-        if staff.unassign_enclosure(enclosure):
+        if enclosure in staff.enclosures:
+            staff.unassign_enclosure(enclosure)
             print(f"{staff.name} unassigned from {enclosure.name}")
+        else:
+            print(f"{staff.name} is not assigned to {enclosure.name}")
 
 
 
     def add_to_routine(self, staff, task, day):
         allow_add_to_routine = True
 
-        if task not in staff.duties:
+        if task not in staff.tasks:
             print(f"This task is not in {staff.name}'s official list of duties.")
             allow_add_to_routine = False
 
         if allow_add_to_routine:
             self.daily[day].append((staff, task))
+            print(f"{staff.name} '{task.name}' added to {day}")
             return True
         return False
+
+    def clear_routines(self):
+        self.__daily_routines = {"Monday": [],
+                                 "Tuesday": [],
+                                 "Wednesday": [],
+                                 "Thursday": [],
+                                 "Friday": []}
 
 
 
@@ -247,6 +331,10 @@ class Zoo:
 
 
         self.reports[report_choice - 1].generate_report(self)
+
+
+
+
 
 
 

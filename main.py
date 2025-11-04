@@ -50,8 +50,8 @@ def start_zoo():
     clean_lion_enc = task.Feed("Cleaning lion enclosure", "Cleaning the lion enclosure",["Veterinarian", "Zoo keeper"], lion_enc)
     feed_bird_enc = task.Feed("Feeding birds", "Feeding birds at the bird enclosure",["Veterinarian", "Zoo keeper"], bird_enc)
     feed_fish_enc = task.Feed("Feeding fish", "Feeding fish at the fish enclosure",["Veterinarian", "Zoo keeper"], fish_enc)
-    surgery = task.Surgery("Surgery", "Performs surgery.", ["Veterinarian"], lion1)
-    health_check_lion1 = task.HealthCheck("Health check", "Performs health check on lion.", ["Veterinarian"], lion1)
+    surgery = task.Surgery("Surgery", "Performs surgery.", ["Veterinarian"], animal=lion1)
+    health_check_lion1 = task.HealthCheck("Health check", "Performs health check on lion.", ["Veterinarian"], animal=lion1)
 
 
     tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1]
@@ -63,17 +63,18 @@ def start_zoo():
 #
 
 
-def managing_animals(zoo, animals, enclosures):
+def managing_animals(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate adding animals to zoos and enclosures"""
-    lion1, bird1, bird2, fish1 = animals
-    lion_enc, bird_enc, fish_enc = enclosures
+    lion1, bird1, bird2, fish1, bird3, bird4 = animals
+    lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
+    zk1, vet1 = staff_list
 
 
     print(f"\n--- Demo adding/removing animal ---")
     zoo.add_animal(lion1)
     zoo.add_animal(lion1)
     zoo.list_zoo_animals()
-    zoo.remove_animal(lion1)
     zoo.list_zoo_animals()
 
     print(f"\n--- Demo assigning animal to enclosure ---")
@@ -114,6 +115,31 @@ def managing_animals(zoo, animals, enclosures):
     zoo.move_animal(bird1, bird_enc, lion_enc)
 
 
+    print(f"\n--- Removing animal with related task ---")
+    zoo.add_staff(vet1)
+    zoo.assign_staff_enclosure(vet1, lion_enc)
+    zoo.add_enclosure(lion_enc)
+    zoo.assign_staff_enclosure(vet1, lion_enc)
+    zoo.add_task(vet1, surgery)
+    zoo.add_to_routine(vet1, surgery, "Monday")
+    zoo.remove_animal(lion1, lion_enc)
+    zoo.clear_routines()
+    print(zoo.daily)
+    print(vet1.tasks)
+    zoo.remove_animal(lion1, lion_enc)
+    zoo.remove_task(vet1, surgery)
+    zoo.remove_animal(lion1, lion_enc)
+
+
+    # print(f"\n--- Removing enclosure with related task ---")
+    # zoo.add_staff(zk1)
+    # zoo.assign_staff_enclosure(zk1, lion_enc)
+    # zoo.add_task(zk1, feed_lion_enc)
+    #
+    # zoo.remove_enclosure(lion_enc)
+    # # zoo.clear_routines()
+    # # print(zoo.daily)
+    # # zoo.remove_enclosure(lion_enc)
 
 
 
@@ -289,8 +315,8 @@ def run_zoo_demonstration():
     # --- Demonstration Orchestration Sequence ---
     zoo, animals, enclosures, staff_list, tasks = start_zoo()
     # demo_animal_abilities(zoo, animals, enclosures)
-    # managing_animals(zoo, animals, enclosures)
-    managing_enclosures(zoo, animals, enclosures, staff_list, tasks)
+    managing_animals(zoo, animals, enclosures, staff_list, tasks)
+    # managing_enclosures(zoo, animals, enclosures, staff_list, tasks)
     # managing_staff(zoo, animals, enclosures, staff_list, tasks)
     # health_record_system(zoo, animals, enclosures, staff_list, tasks)
     # generate_reports(zoo, animals, enclosures, staff_list, tasks)

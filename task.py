@@ -11,11 +11,12 @@ from abc import ABC, abstractmethod
 
 
 class Task(ABC):
-    def __init__(self, name, description, roles=None, assigned_enclosure=None):
+    def __init__(self, name, description, roles=None, assigned_enclosure=None, animal=None):
         self.__name = name
         self.__description = description
         self.__assigned_enclosure = assigned_enclosure
         self.__roles = roles
+        self.__animal = animal
 
     # Getters / setters
     def get_name(self):
@@ -27,9 +28,14 @@ class Task(ABC):
     def get_assigned_enclosure(self):
         return self.__assigned_enclosure
 
+    def get_animal(self):
+        return self.__animal
+
     name = property(get_name)
     roles = property(get_roles)
     enclosure = property(get_assigned_enclosure)
+    animal = property(get_animal)
+
 
     @abstractmethod
     def perform_action(self):
@@ -43,8 +49,8 @@ class Task(ABC):
 
 
 class Feed(Task):
-    def __init__(self, name, description, roles=None, assigned_enclosure=None):
-        super().__init__(name, description, roles, assigned_enclosure)
+    def __init__(self, name, description, roles=None, assigned_enclosure=None, animal=None):
+        super().__init__(name, description, roles, assigned_enclosure, animal)
 
     def perform_action(self):
         self.enclosure.feed_animals()
@@ -55,17 +61,14 @@ class Feed(Task):
 
 
 class Surgery(Task):
-    def __init__(self, name, description, roles, animal):
-        super().__init__(name, description, roles, assigned_enclosure=None)
-        self.__animal = animal
+    def __init__(self, name, description, roles, assigned_enclosure=None, animal=None):
+        super().__init__(name, description, roles, assigned_enclosure, animal)
 
-    def get_animal(self):
-        return self.__animal
+
 
     def get_health_record(self):
         return self.__health_record
 
-    animal = property(get_animal)
 
     def perform_action(self):
 
@@ -79,15 +82,10 @@ class Surgery(Task):
 
 
 class HealthCheck(Task):
-    def __init__(self, name, description, roles, animal):
-        super().__init__(name, description, roles, assigned_enclosure=None)
-        self.__animal = animal
+    def __init__(self, name, description, roles, assigned_enclosure=None, animal=None):
+        super().__init__(name, description, roles, assigned_enclosure, animal)
 
 
-    def get_animal(self):
-        return self.__animal
-
-    animal = property(get_animal)
 
 
     def perform_action(self):

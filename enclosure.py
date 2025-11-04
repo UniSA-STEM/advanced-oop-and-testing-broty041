@@ -194,6 +194,9 @@ class Enclosure:
         return f"{self.__name}"
 
 
+    def __repr__(self):
+        return f"{self.__name}"
+
 
 
 
