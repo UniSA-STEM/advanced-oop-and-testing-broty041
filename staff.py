@@ -48,14 +48,18 @@ class Staff:
     def add_duty(self, task):
         allow_add_duty = True
 
+        # Check staff doesn't already have the task
         if task in self.duties:
             print(f"{self.name} already performs the task {task.name}")
             allow_add_duty = False
 
+        # Checking if task is assigned to an enclosure and if the staffs
+        # assigned enclosure matches
         if allow_add_duty and task.enclosure and task.enclosure not in self.enclosures:
             print(f"{self.name} is not assigned to {task.enclosure}")
             allow_add_duty = False
 
+        # Check if staff can do a task based on their role
         if allow_add_duty and self.role not in task.roles:
             print(f"{self.role[0]}s are not able to perform task '{task.name}'")
             allow_add_duty = False

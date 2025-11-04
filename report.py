@@ -77,7 +77,7 @@ class AnimalsBySpecies(Report):
 
         sorted_dict = dict(sorted(animals_dict.items()))
 
-        temp = ""
+
         for species, animals in sorted_dict.items():
             print(f"        --- {species} ---")
             for a in animals:

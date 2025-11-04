@@ -16,6 +16,7 @@ class Zoo:
         self.__name = name
         self.__animals = []
         self.__enclosures = []
+        self.__staff = []
         self.__daily_routines = {"Monday": [],
                                  "Tuesday": [],
                                  "Wednesday": [],
@@ -23,7 +24,7 @@ class Zoo:
                                  "Friday": []}
         self.__reports = self.populate_reports()
 
-    # Getters and setters
+    # Getters / setters
     def get_animals(self):
         return self.__animals
 
@@ -36,13 +37,17 @@ class Zoo:
     def get_enclosures(self):
         return self.__enclosures
 
+    def get_staff(self):
+        return self.__staff
+
     animals = property(get_animals)
     daily = property(get_daily_routines)
     reports = property(get_reports)
     enclosures = property(get_enclosures)
+    staff = property(get_staff)
 
 
-    # Animal Management
+    # Animal management
     def find_animal(self, animal):
         """
         Find an animal with either a string or object as a parameter.
@@ -104,12 +109,6 @@ class Zoo:
             return True
         return False
 
-    def add_enclosure(self, enclosure):
-        self.__enclosures.append(enclosure)
-
-    def remove_enclosure(self, enclosure):
-        self.__enclosures.remove(enclosure)
-
     def assign_animal(self, animal, enclosure):
         """Assign animal to an enclosure."""
         if animal.movable:
@@ -143,6 +142,22 @@ class Zoo:
             return True
         return False
 
+    # Enclosure management
+    def add_enclosure(self, enclosure):
+        self.__enclosures.append(enclosure)
+
+    def remove_enclosure(self, enclosure):
+        self.__enclosures.remove(enclosure)
+
+
+
+    # Staff management
+
+    def add_staff(self, staff):
+        self.staff.append(staff)
+
+    def remove_staff(self, staff):
+        self.staff.append(staff)
 
     def add_to_routine(self, staff, task, day):
         allow_add_to_routine = True
@@ -155,6 +170,8 @@ class Zoo:
             self.daily[day].append((staff, task))
             return True
         return False
+
+
 
 
     def generate_health_record(self, animal, description, record_type, date,
@@ -189,8 +206,8 @@ class Zoo:
         for i, report in enumerate(self.reports):
             print(f"{i + 1}. {report.name}")
 
-        # report_choice = int(input(("Enter number: ")))
-        report_choice = 3
+        report_choice = int(input(("Enter number: ")))
+
 
         self.reports[report_choice - 1].generate_report(self)
 
