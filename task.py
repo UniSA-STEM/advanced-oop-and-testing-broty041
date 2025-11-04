@@ -72,13 +72,23 @@ class Surgery(Task):
 
         if self.animal.requires_surgery():
             print(f"Surgery is performed on {self.animal.name} the "
-                  f"{self.animal.species}")
+                  f"{self.animal.species} and is successful.")
         else:
             print(f"{self.animal.name} the {self.animal.species} does not "
                   f"need surgery. Please confirm with Veterinarian.")
 
 
+class HealthCheck(Task):
+    def __init__(self, name, description, roles, animal):
+        super().__init__(name, description, roles, assigned_enclosure=None)
+        self.__animal = animal
 
 
+    def get_animal(self):
+        return self.__animal
+
+    animal = property(get_animal)
 
 
+    def perform_action(self):
+        self.animal.check_health()

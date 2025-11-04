@@ -157,7 +157,11 @@ class Zoo:
         self.__enclosures.append(enclosure)
 
     def remove_enclosure(self, enclosure):
-        self.__enclosures.remove(enclosure)
+        if enclosure.occupants:
+            print(f"Cannot remove enclosure. {enclosure.name} still has occupants!")
+        else:
+            self.__enclosures.remove(enclosure)
+            print(f"{enclosure.name} has been removed from the zoo.")
 
 
 

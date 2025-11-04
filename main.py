@@ -51,8 +51,10 @@ def start_zoo():
     feed_bird_enc = task.Feed("Feeding birds", "Feeding birds at the bird enclosure",["Veterinarian", "Zoo keeper"], bird_enc)
     feed_fish_enc = task.Feed("Feeding fish", "Feeding fish at the fish enclosure",["Veterinarian", "Zoo keeper"], fish_enc)
     surgery = task.Surgery("Surgery", "Performs surgery.", ["Veterinarian"], lion1)
+    health_check_lion1 = task.HealthCheck("Health check", "Performs health check on lion.", ["Veterinarian"], lion1)
 
-    tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc]
+
+    tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1]
 
     return zoo1, animals, enclosures, staff_list, tasks
 
@@ -126,14 +128,15 @@ def demo_animal_abilities(zoo, animals, enclosures):
     lion1.sleep()
 
 
-def enclosure_restrictions(zoo, animals, enclosures):
+def managing_enclosures(zoo, animals, enclosures, staff_list, tasks):
     """
-    Demonstrate enforcement of enclosure restrictions
-    like max occupancy.
+    Demonstrate enclosure management
     """
     print(f"\n--- Demo enclosure restriction enforcement ---")
-    lion1, bird1, bird2, fish1, bird3 = animals
+    lion1, bird1, bird2, fish1, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
+    zk1, vet1 = staff_list
 
     zoo.add_animal(bird1)
     zoo.add_animal(bird2)
@@ -150,11 +153,17 @@ def enclosure_restrictions(zoo, animals, enclosures):
     zoo.add_enclosure(bird2_enc)
     zoo.assign_animal(bird3, bird2_enc)
 
+    print(f"\n--- Removing enclosure. ---")
+    zoo.remove_enclosure(bird2_enc)
+    zoo.unassign_animal(bird3, bird2_enc)
+    zoo.remove_enclosure(bird2_enc)
+
+
 def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate staff methods."""
     lion1, bird1, bird2, fish1, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
-    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc = tasks
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
     zk1, vet1 = staff_list
 
     print(f"\n--- Demo managing staff members. ---")
@@ -196,12 +205,12 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     # zoo.remove_task(zk1, feed_fish_enc)
     # zoo.remove_task(zk1, feed_lion_enc)
 
-    print(f"\n--- Vet perform surgery ---")
+    print(f"\n--- Vet performs surgery ---")
     zoo.assign_staff_enclosure(vet1,lion_enc)
     zoo.add_task(vet1, feed_lion_enc)
     zoo.add_task(vet1, surgery)
     vet1.perform_task(surgery)
-    zoo.generate_health_record(lion1, "Appendicitis", "Injury", "03/11/25", "Active", 5, "Surgery", "Ate shoe.")
+    zoo.generate_health_record(lion1, "Appendicitis", "Injury", "03/11/25", "Active", 2, "Surgery", "Ate shoe.")
     vet1.perform_task(surgery)
 
     print(f"\n--- Zoo keeper feed animals ---")
@@ -213,6 +222,16 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     lion_enc.feed = False
     zk1.perform_task(feed_lion_enc)
     print(lion_enc.clean)
+
+    print(f"\n--- Vet performs health check ---")
+    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury", "03/11/25", "Active", 3, "Belly rubs.", "Ate peanuts.")
+
+    vet1.perform_task(health_check_lion1)
+    zoo.add_task(vet1, health_check_lion1)
+    vet1.perform_task(health_check_lion1)
+
+    vet1.perform_task(health_check_lion1)
+    vet1.perform_task(health_check_lion1)
 
 
 
@@ -271,8 +290,8 @@ def run_zoo_demonstration():
     zoo, animals, enclosures, staff_list, tasks = start_zoo()
     # demo_animal_abilities(zoo, animals, enclosures)
     # managing_animals(zoo, animals, enclosures)
-    # enclosure_restrictions(zoo, animals, enclosures)
-    managing_staff(zoo, animals, enclosures, staff_list, tasks)
+    managing_enclosures(zoo, animals, enclosures, staff_list, tasks)
+    # managing_staff(zoo, animals, enclosures, staff_list, tasks)
     # health_record_system(zoo, animals, enclosures, staff_list, tasks)
     # generate_reports(zoo, animals, enclosures, staff_list, tasks)
 

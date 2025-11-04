@@ -9,7 +9,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 
 from abc import ABC, abstractmethod
 
-import random
+from health_record import HealthRecord
 
 
 class Animal(ABC):
@@ -104,13 +104,26 @@ class Animal(ABC):
     def requires_surgery(self):
         for record in self.record.values():
             if record.plan == "Surgery" and record.status == "Active":
+                record.status = "Closed"
                 return True
         return False
 
 
-    def finding_health_problems(self):
-        """Simulates a health check with 20% chance of finding an issue."""
-        print
+
+    def check_health(self):
+        active_issues = [record for record in self.record.values()
+                         if record.status == "Active"]
+        print(f"{self.name}'s health check begins.")
+        if active_issues:
+            for record in active_issues:
+                print(f"{record.description} is treated.")
+                record.severity = -1
+                if record.severity == 0:
+                    print(f"{record.description} is resolved.")
+                    record.status = "Closed."
+        else:
+            print(f"{self.name} has no further issues. "
+                  f"Vet has concluded health check.")
 
 
 

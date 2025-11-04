@@ -26,6 +26,9 @@ class HealthRecord(ABC):
     def get_severity_level(self):
         return self.__severity_level
 
+    def set_severity_level(self, change):
+        self.__severity_level += change
+
     def get_record_id(self):
         return self.__record_id
 
@@ -34,6 +37,9 @@ class HealthRecord(ABC):
 
     def get_status(self):
         return self.__status
+
+    def set_status(self, status):
+        self.__status = status
 
     def get_date(self):
         return self.__date
@@ -46,8 +52,8 @@ class HealthRecord(ABC):
 
 
     record_id = property(get_record_id, set_record_id)
-    status = property(get_status)
-    severity = property(get_severity_level)
+    status = property(get_status, set_status)
+    severity = property(get_severity_level, set_severity_level)
     date = property(get_date)
     description = property(get_description)
     plan = property(get_treatment_plan)

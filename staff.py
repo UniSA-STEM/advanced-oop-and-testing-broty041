@@ -49,6 +49,8 @@ class Staff:
     def perform_task(self, task):
         if task in self.tasks:
             task.perform_action()
+        else:
+            print(f"{self.name} does not have task '{task.name}'")
 
     def list_duties(self):
         print(f"--- {self.name}'s Duties ---")
