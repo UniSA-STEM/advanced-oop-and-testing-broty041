@@ -17,6 +17,8 @@ import task
 
 
 def start_zoo():
+    # Class Docstring
+
     """Instantiate basic parts of the zoo."""
     # Zoo
     zoo1 = Zoo("Zoop")
@@ -28,8 +30,9 @@ def start_zoo():
     bird3 = animal.Bird("Pingu", "Penguin", 5, "Male", "Carnivore", "Bird", "Arctic", 10)
     bird4 = animal.Bird("Sangief", "Galah", 4, "Male", "Omnivore", "Bird", "Amazon", 10)
     fish1 = animal.Fish("Old Ironjaw", "Trout", 3, "Male", "Omnivore", "Fish", "Tropical", ["yellow", "blue"])
+    fish2 = animal.Fish("Old Ironjaw", "Killer whale", 3, "Male", "Omnivore", "Fish", "Arctic", ["black"])
 
-    animals = [lion1, bird1, bird2, fish1, bird3, bird4]
+    animals = [lion1, bird1, bird2, fish1, fish2, bird3, bird4]
 
     # Enclosures
     lion_enc = Enclosure("Lion ENC 1", 2, "Savannah", "Mammal", "Empty")
@@ -65,7 +68,7 @@ def start_zoo():
 
 def managing_animals(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate adding animals to zoos and enclosures"""
-    lion1, bird1, bird2, fish1, bird3, bird4 = animals
+    lion1, bird1, bird2, fish1, fish2, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
     feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
     zk1, vet1 = staff_list
@@ -130,6 +133,7 @@ def managing_animals(zoo, animals, enclosures, staff_list, tasks):
     zoo.remove_task(vet1, surgery)
     zoo.remove_animal(lion1, lion_enc)
 
+    lion1.update_movability()
 
     # print(f"\n--- Removing enclosure with related task ---")
     # zoo.add_staff(zk1)
@@ -144,14 +148,17 @@ def managing_animals(zoo, animals, enclosures, staff_list, tasks):
 
 
 
-def demo_animal_abilities(zoo, animals, enclosures):
+def demo_animal_abilities(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate basic animal abilities."""
-    lion1, bird1, fish1 = animals
+    lion1, bird1, bird2, fish1, fish2, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
+    zk1, vet1 = staff_list
 
-    lion1.cry()
+    bird2.cry()
     lion1.eat()
     lion1.sleep()
+    fish1.eat()
 
 
 def managing_enclosures(zoo, animals, enclosures, staff_list, tasks):
@@ -209,10 +216,10 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
 
     # Check cant unassign with assigned related tasks
     zoo.unassign_staff_enclosure(zk1,lion_enc)
-    zk1.list_duties()
+    zk1.list_tasks()
     zoo.remove_task(zk1, feed_lion_enc)
     zoo.remove_task(zk1, clean_lion_enc)
-    zk1.list_duties()
+    zk1.list_tasks()
     zoo.unassign_staff_enclosure(zk1,lion_enc)
     zoo.add_task(zk1, clean_lion_enc)
     zoo.assign_staff_enclosure(zk1,lion_enc)
@@ -225,7 +232,7 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     zoo.add_task(zk1, feed_fish_enc)
 
 
-    # zk1.list_duties()
+    # zk1.list_tasks()
 
     # zoo.remove_task(zk1, feed_lion_enc)
     # zoo.remove_task(zk1, feed_fish_enc)
@@ -288,7 +295,7 @@ def generate_reports(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate usage of zoo operations reports."""
     lion1, bird1, bird2, fish1, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc = enclosures
-    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery = tasks
+    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
     zk1, vet1 = staff_list
 
     for e in enclosures:
@@ -309,13 +316,18 @@ def generate_reports(zoo, animals, enclosures, staff_list, tasks):
 
 
     managing_staff(zoo, animals, enclosures, staff_list, tasks)
+
+
     zoo.display_report_interface()
 
 def run_zoo_demonstration():
+
     # --- Demonstration Orchestration Sequence ---
     zoo, animals, enclosures, staff_list, tasks = start_zoo()
-    # demo_animal_abilities(zoo, animals, enclosures)
-    managing_animals(zoo, animals, enclosures, staff_list, tasks)
+
+
+    # demo_animal_abilities(zoo, animals, enclosures, staff_list, tasks)
+    # managing_animals(zoo, animals, enclosures, staff_list, tasks)
     # managing_enclosures(zoo, animals, enclosures, staff_list, tasks)
     # managing_staff(zoo, animals, enclosures, staff_list, tasks)
     # health_record_system(zoo, animals, enclosures, staff_list, tasks)
