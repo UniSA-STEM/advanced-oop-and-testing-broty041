@@ -1,6 +1,7 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: health_record.py
+Description: Generates records stored on animals that contain
+information from a health event.
 Author: Thomas Brown
 ID: 110454503
 Username: broty041
@@ -77,13 +78,16 @@ class HealthRecord:
     def get_treatment_plan(self):
         return self.__treatment_plan
 
+    def set_treatment_plan(self, new_plan):
+        self.__treatment_plan = new_plan
+
     # --- Property Attributes ---
     record_id = property(get_record_id, set_record_id)
     status = property(get_status, set_status)
     severity = property(get_severity_level, set_severity_level)
     date = property(get_date)
     description = property(get_description)
-    plan = property(get_treatment_plan)
+    plan = property(get_treatment_plan, set_treatment_plan)
 
     def __repr__(self):
         return f"{self.__description}{self.__status}"

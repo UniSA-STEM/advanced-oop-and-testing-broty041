@@ -1,6 +1,6 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: task.py
+Description: Create tasks for use by zoo staff.
 Author: Thomas Brown
 ID: 110454503
 Username: broty041
@@ -53,13 +53,16 @@ class Task(ABC):
     def get_assigned_enclosure(self):
         return self.__assigned_enclosure
 
+    def set_assigned_enclosure(self, enclosure):
+        self.__assigned_enclosure = enclosure
+
     def get_animal(self):
         return self.__animal
 
     # --- Property Attributes ---
     name = property(get_name)
     roles = property(get_roles)
-    enclosure = property(get_assigned_enclosure)
+    enclosure = property(get_assigned_enclosure, set_assigned_enclosure)
     animal = property(get_animal)
 
     @abstractmethod

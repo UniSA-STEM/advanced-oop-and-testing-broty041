@@ -1,6 +1,7 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: enclosure.py
+Description: Create enclosures that are assigned to the zoo to enable
+housing of animals
 Author: Thomas Brown
 ID: 110454503
 Username: broty041
@@ -275,6 +276,9 @@ class Enclosure:
             self.__occupants.remove(animal)
             print(f"{animal.name} unassigned from {self.name}. "
                   f"Now in holding pen.")
+            "Set occupants status to Empty if no animals."
+            if len(self.occupants) == 0:
+                self.status = "Empty"
             return True
         return False
 

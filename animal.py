@@ -139,7 +139,7 @@ class Animal(ABC):
                     self.movable = False
                     print(f"{self.name} is {'not movable' if self.movable is False else 'movable'} due to '{v.description}' - {v.date}")
 
-    def add_health_record(self, new_record_id, record):
+    def add_health_record(self, new_record_id: object, record: object) -> None:
         """
         Add new health record to animal.
 

@@ -1,6 +1,7 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: zoo_operations.py
+Description: Orchestrates the management of animals, enclosures, staff,
+tasks, health records and reports for the zoo.
 Author: Thomas Brown
 ID: 110454503
 Username: broty041
@@ -203,7 +204,7 @@ class Zoo:
 
         # Dependency check in animal is part of any daily routine entries
         if allow_remove_animal:
-            routine_dependencies = self.check_routine_dependencies_animal(animal)
+            routine_dependencies = self.__check_routine_dependencies_animal(animal)
             if routine_dependencies:
                 print(f"Cannot remove {animal.name}. Animal is assigned to daily routines: {routine_dependencies}")
                 allow_remove_animal = False
@@ -226,7 +227,7 @@ class Zoo:
             return True
         return False
 
-    def check_routine_dependencies_animal(self, animal):
+    def __check_routine_dependencies_animal(self, animal):
         """
         Check if animal appears in any daily routine.
 

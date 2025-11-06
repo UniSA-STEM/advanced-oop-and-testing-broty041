@@ -1,6 +1,6 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: staff.py
+Description: Create staff who work at the zoo.
 Author: Thomas Brown
 ID: 110454503
 Username: broty041

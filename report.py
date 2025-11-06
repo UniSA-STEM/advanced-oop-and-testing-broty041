@@ -1,6 +1,6 @@
 '''
-File: filename.py
-Description: A brief description of this Python module.
+File: report.py
+Description: Generates reports to aid zoo operations.
 Author: Thomas Brown
 ID: 110454503
 Username: broty041
@@ -127,6 +127,7 @@ class DailyRoutines(Report):
             print(f"{day}: {routine_formatted}")
 
 
+
 class AnimalsBySpecies(Report):
     # Class Docstring
     """
@@ -176,6 +177,7 @@ class AnimalsBySpecies(Report):
                       f"\n--------------------------------")
 
 
+
 class StatusAllEnclosures(Report):
     # Class Docstring
     """
@@ -211,3 +213,4 @@ class StatusAllEnclosures(Report):
                                       occupant in enclosure.occupants)
             print(f"Occupants: "
                   f"{occupants_enc if occupants_enc else 'None'}\n")
+
