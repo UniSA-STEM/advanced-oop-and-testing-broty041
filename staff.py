@@ -128,8 +128,8 @@ class Staff:
         # Dependency check staff doesnt have related tasks
         for task in self.tasks:
             if allow_unassign_enclosure and task.enclosure == enclosure:
-                print(f"{self.name} is assigned duties involving "
-                      f"{enclosure.name}. Must remove related duties first.")
+                print(f"{self.name} is assigned tasks involving "
+                      f"{enclosure.name}. Must remove related tasks first.")
                 allow_unassign_enclosure = False
 
         if allow_unassign_enclosure:

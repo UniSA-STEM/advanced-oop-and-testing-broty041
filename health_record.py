@@ -66,7 +66,7 @@ class HealthRecord:
         return self.__severity_level
 
     def set_severity_level(self, change):
-        self.__severity_level += change
+        self.__severity_level = change
 
     def get_date(self):
         return self.__date
