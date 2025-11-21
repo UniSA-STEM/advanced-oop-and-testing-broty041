@@ -132,14 +132,13 @@ class Animal(ABC):
                 None: (Prints when animal’s movable change.)
         """
 
-
         for r, v in self.record.items():
             # If active issue and severity > 2 then immovable
             if v.status == "Active" and v.severity > 2:
                 if self.movable:
                     self.movable = False
                     print(f"{self.name} is "
-                          f"{'not movable' if self.movable 
+                          f"{'not movable' if self.movable
                                               is False else 'movable'}"
                           f" due to '{v.description}' - {v.date}")
 
@@ -206,7 +205,6 @@ class Animal(ABC):
             print(f"{self.name} has no further issues. "
                   f"Vet has concluded health check.")
 
-
     def __str__(self):
         return (f"Animal Class: {self.__animal_class}"
                 f"\nSpecies: {self.__species}"
@@ -217,7 +215,20 @@ class Animal(ABC):
 
 
 class Lion(Animal):
-    """Lion inherits animal behaviour and adds alpha status behaviour."""
+    """
+    Lion inherits animal behaviour and adds alpha status behaviour.
+
+    Attributes
+    ----------
+    __alpha : bool
+        Whether lion is an alpha (default False).
+
+    Methods
+    -------
+        eat():
+            Eating behaviour based on alpha status.
+    """
+
     def __init__(self, name, species, age, gender,
                  diet, animal_class, environment):
         super().__init__(name, species, age, gender,
@@ -244,15 +255,35 @@ class Lion(Animal):
 
 
 class Bird(Animal):
-    """Bird inherits animal behaviour and adds wing-span behaviour."""
+    """
+    Bird inherits animal behaviour and adds wing-span behaviour.
+
+    Attributes
+    ----------
+    __wing_span : float
+        Wing span measurement in cm.
+    __can_fly : bool
+        Whether bird can fly.
+
+    Methods
+    -------
+        eat():
+            Eating behaviour based on if it can fly and species for penguin.
+    """
+
     def __init__(self, name, species, age, gender, diet,
-                 animal_class, environment, wing_span):
+                 animal_class, environment, wing_span, can_fly):
         super().__init__(name, species, age, gender, diet,
                          animal_class, environment)
         self.__wing_span = wing_span
+        self.__can_fly = can_fly
+
+    def get_fly(self):
+        return self.__can_fly
+
+    fly = property(get_fly)
 
     def cry(self):
-
         sounds = {
             "Galah": "*Screeech!*",
             "Toucan": "*KAWWWWW kckaww*",
@@ -262,7 +293,15 @@ class Bird(Animal):
         print(f"{self.name} the {self.species} goes {sound} ")
 
     def eat(self):
-        print("Pecks at the food.")
+        # Check if can fly and species and print appropriate text
+        if self.fly:
+            print(f"{self.name} flies down from a tree to peck at the food.")
+        elif not self.fly and self.species == "Penguin":
+            print(f"{self.name} waddles over to the fish container "
+                  f"and eats some juicy fish so sweet.")
+        else:
+            print(f"{self.name} walks over to the feed "
+                  f"trough and gobbles it up.")
 
     def sleep(self):
         print(f"{self.name} tucks its head between its feathers"
@@ -273,25 +312,51 @@ class Bird(Animal):
 
 
 class Fish(Animal):
-    """Fish inherits animal behaviour and adds scale-colour description."""
+    """
+    Fish inherits animal behaviour and adds scale-colour description.
+
+    Attributes
+    ----------
+    __scale_colours : list
+        Scale colours.
+    __swim_depth : int
+        Depth it can swim down to in metres.
+
+    Methods
+    -------
+        eat():
+            Eating behaviour based on species and environment.
+    """
+
     def __init__(self, name, species, age, gender, diet, animal_class,
-                 environment, scale_colours):
+                 environment, scale_colours, swim_depth):
         super().__init__(name, species, age, gender, diet, animal_class,
                          environment)
         self.__scale_colours = scale_colours
+        self.__swim_depth = swim_depth
+
+    def get_swim_depth(self):
+        return self.__swim_depth
 
     def cry(self):
         print("*inaudible noises*")
 
     def eat(self):
+        # Check if whale and environment and include
+        # in print the depth it swims down to
         if self.species == "Killer whale" and self.environment == "Arctic":
-            print("Dives deep down in the tank for a tasty hunk of fish.")
+            print(f"{self.name} dives down {self.swim_depth}m in"
+                  f" the tank for a tasty hunk of fish.")
         elif self.environment == "Tropical":
-            print("Curiously bobs around the surface eating fishy food.")
+            print(f"{self.name} curiously bobs around the surface eating"
+                  f" fishy food, sometimes diving {self.swim_depth}m for "
+                  f"extra food goodies.")
 
     def sleep(self):
         print("Fish swims around and finds a rock, we think its sleeping "
               "but nobody really knows with fish.")
+
+    swim_depth = property(get_swim_depth)
 
     def __str__(self):
         description = "I am a combination of "

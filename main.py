@@ -29,23 +29,24 @@ def start_zoo():
                         "Savannah")
     bird1 = animal.Bird("Birdy", "Galah", 10,
                         "Female", "Omnivore", "Bird",
-                        "Amazon", 10)
+                        "Amazon", 10, True)
     bird2 = animal.Bird("Polly", "Toucan", 5,
                         "Male", "Omnivore", "Bird",
-                        "Amazon", 10)
+                        "Amazon", 10, True)
     bird3 = animal.Bird("Pingu", "Penguin", 5,
                         "Male", "Carnivore", "Bird",
-                        "Arctic", 10)
+                        "Arctic", 10, False)
     bird4 = animal.Bird("Sangief", "Galah", 4,
                         "Male", "Omnivore", "Bird",
-                        "Amazon", 10)
+                        "Amazon", 10, True)
     fish1 = animal.Fish("Old Ironjaw", "Trout", 3,
                         "Male", "Omnivore", "Fish",
-                        "Tropical", ["yellow", "blue"])
-    fish2 = animal.Fish("Old Ironjaw", "Killer whale",
+                        "Tropical", ["yellow", "blue"],
+                        20)
+    fish2 = animal.Fish("Willy", "Killer whale",
                         3, "Male", "Omnivore",
                         "Fish", "Arctic",
-                        ["black"])
+                        ["black"], 300)
 
     animals = [lion1, bird1, bird2, fish1, fish2, bird3, bird4]
 
@@ -79,9 +80,9 @@ def start_zoo():
                               ["Veterinarian", "Zoo keeper"],
                               lion_enc)
     clean_lion_enc = task.Clean("Cleaning lion enclosure",
-                               "Cleaning the lion enclosure",
-                               ["Veterinarian", "Zoo keeper"],
-                               lion_enc)
+                                "Cleaning the lion enclosure",
+                                ["Veterinarian", "Zoo keeper"],
+                                lion_enc)
     feed_bird_enc = task.Feed("Feeding birds",
                               "Feeding birds at the bird enclosure",
                               ["Veterinarian", "Zoo keeper"],
@@ -93,8 +94,8 @@ def start_zoo():
     surgery = task.Surgery("Surgery", "Performs surgery.",
                            ["Veterinarian"], animal=lion1)
     health_check_lion1 = task.HealthCheck("Health check",
-                                "Performs health check on lion.",
-                                ["Veterinarian"],
+                                          "Performs health check on lion.",
+                                          ["Veterinarian"],
                                           animal=lion1)
 
     tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc,
@@ -368,7 +369,7 @@ def generate_reports(zoo, animals, enclosures, staff_list, tasks):
     zoo.add_animal(fish1)
 
     # To run the interactive report menu uncomment the line below and
-    # comment the for loop code :)
+    # comment out the loop.
     # zoo.display_report_interface()
     for report in zoo.reports.reports:
         report.generate_report(zoo)

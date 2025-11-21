@@ -318,7 +318,6 @@ class Enclosure:
         for o in self.occupants.copy():
             self.remove_occupant(o)
 
-
     def __str__(self):
         return f"{self.__name}"
 

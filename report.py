@@ -127,7 +127,6 @@ class DailyRoutines(Report):
             print(f"{day}: {routine_formatted}")
 
 
-
 class AnimalsBySpecies(Report):
     # Class Docstring
     """
@@ -177,7 +176,6 @@ class AnimalsBySpecies(Report):
                       f"\n--------------------------------")
 
 
-
 class StatusAllEnclosures(Report):
     # Class Docstring
     """
@@ -213,4 +211,3 @@ class StatusAllEnclosures(Report):
                                       occupant in enclosure.occupants)
             print(f"Occupants: "
                   f"{occupants_enc if occupants_enc else 'None'}\n")
-
