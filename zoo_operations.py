@@ -377,9 +377,13 @@ class Zoo:
             Returns:
                 None: (Append enclosure, print confirmation.)
         """
-
-        self.__enclosures.append(enclosure)
-        print(f"{enclosure.name} added to the zoo.")
+        if enclosure in self.__enclosures:
+            print(f"{enclosure.name} already exists in the zoo.")
+            return False
+        else:
+            self.__enclosures.append(enclosure)
+            print(f"{enclosure.name} added to the zoo.")
+            return True
 
     def remove_enclosure(self, enclosure):
         """
@@ -498,9 +502,11 @@ class Zoo:
             Returns:
                 None: (Print confirmation.)
         """
-
-        self.staff.append(staff)
-        print(f"{staff.name} the {staff.role} has been added to the Zoo.")
+        if staff in self.staff:
+            print(f"{staff.name} already exists in the zoo system.")
+        else:
+            self.staff.append(staff)
+            print(f"{staff.name} the {staff.role} has been added to the Zoo.")
 
     def remove_staff(self, staff):
         """
@@ -602,8 +608,8 @@ class Zoo:
         """
 
         if enclosure in self.enclosures:
-            staff.assign_enclosure(enclosure)
-            print(f"{staff.name} assigned to {enclosure.name}")
+            if staff.assign_enclosure(enclosure):
+                print(f"{staff.name} assigned to {enclosure.name}")
         else:
             print(f"Enclosure doesn't exist at the zoo")
 

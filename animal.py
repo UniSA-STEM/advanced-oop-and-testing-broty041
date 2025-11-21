@@ -200,7 +200,7 @@ class Animal(ABC):
                 # If the severity decrease reaches 0 then closed
                 if record.severity == 0:
                     print(f"{record.description} is resolved.")
-                    record.status = "Closed."
+                    record.status = "Closed"
         else:
             print(f"{self.name} has no further issues. "
                   f"Vet has concluded health check.")

@@ -37,7 +37,8 @@ class TestAnimal:
             diet="Carnivore",
             animal_class="Bird",
             environment="Savannah",
-            wing_span=10
+            wing_span=10,
+            can_fly=True
         )
 
     @pytest.fixture()
@@ -51,7 +52,8 @@ class TestAnimal:
             diet="Omnivore",
             animal_class="Fish",
             environment="Tropical",
-            scale_colours=["yellow", "blue"]
+            scale_colours=["yellow", "blue"],
+            swim_depth=200
         )
 
     @pytest.fixture()

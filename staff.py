@@ -102,6 +102,7 @@ class Staff:
                   f"enclosures.")
             allow_assign_enclosure = False
 
+        # Staff can only belong to one enclosure.
         if allow_assign_enclosure:
             self.__assigned_enclosures = [enclosure]
             return True
