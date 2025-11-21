@@ -9,13 +9,15 @@ This is my own work as defined by the University's Academic Integrity Policy.
 '''
 from animal import Animal
 from health_record import HealthRecord
-from report import ReportSystem, DailyRoutines, AnimalsBySpecies, StatusAllEnclosures
+from report import (ReportSystem, DailyRoutines,
+                    AnimalsBySpecies, StatusAllEnclosures)
 
 
 class Zoo:
     # Class Docstring
     """
-    Zoo orchestrates management of all animals, enclosures, staff, daily routines, and reports.
+    Zoo orchestrates management of all animals, enclosures, staff,
+     daily routines, and reports.
 
     Attributes
     ----------
@@ -76,6 +78,16 @@ class Zoo:
         Initialise available reports.
     display_report_interface():
         Display report interface.
+    __check_routine_dependencies_animal(animal):
+        Check whether animal appears in any daily routines.
+    __check_animal_dependencies_staff(animal):
+        Check if animal appears in any staff tasks.
+    __check_routine_dependencies_enclosure(enclosure)
+        Check if enclosure appears in any daily routines.
+    __check_enclosure_dependencies_staff(enclosure):
+        Check if enclosure appears in any staff tasks
+    __check_routine_dependencies_task(task):
+        Check if task appears in any daily routines.
     """
 
     def __init__(self, name):
@@ -125,6 +137,10 @@ class Zoo:
             Returns:
                 object: Animal if found, otherwise None.
         """
+
+        if not isinstance(animal, (Animal, str)):
+            raise TypeError("Animal object or string "
+                            "name of animal expected")
 
         find_ref = animal.name if isinstance(animal, Animal) else animal
         for a in self.__animals:
@@ -204,16 +220,19 @@ class Zoo:
 
         # Dependency check in animal is part of any daily routine entries
         if allow_remove_animal:
-            routine_dependencies = self.__check_routine_dependencies_animal(animal)
+            routine_dependencies = (
+                self.__check_routine_dependencies_animal(animal))
             if routine_dependencies:
-                print(f"Cannot remove {animal.name}. Animal is assigned to daily routines: {routine_dependencies}")
+                print(f"Cannot remove {animal.name}. Animal is"
+                      f" assigned to daily routines: {routine_dependencies}")
                 allow_remove_animal = False
 
         # Dependency check in animal is part of any current staff tasks
         if allow_remove_animal:
-            staff_dependencies = self.check_animal_dependencies_staff(animal)
+            staff_dependencies = self.__check_animal_dependencies_staff(animal)
             if staff_dependencies:
-                print(f"Cannot remove {animal.name}. Animal is assigned to staff tasks: {staff_dependencies}")
+                print(f"Cannot remove {animal.name}. Animal is"
+                      f" assigned to staff tasks: {staff_dependencies}")
                 allow_remove_animal = False
 
         # Check if animal can be moved
@@ -248,7 +267,7 @@ class Zoo:
                     found_days.append(f"{day} ({staff.name}: {task.name})")
         return ", ".join(found_days) if found_days else None
 
-    def check_animal_dependencies_staff(self, animal):
+    def __check_animal_dependencies_staff(self, animal):
         """
         Check if animal appears in any staff tasks.
 
@@ -377,23 +396,29 @@ class Zoo:
 
         # Dependency check enclosure is part of any daily routine entries
         if allow_remove_enclosure:
-            routine_dependencies = self.check_routine_dependencies_enclosure(enclosure)
+            routine_dependencies = (
+                self.__check_routine_dependencies_enclosure(enclosure))
             if routine_dependencies:
                 print(
-                    f"Cannot remove {enclosure.name}. Enclosure is assigned to a related daily routine: {routine_dependencies}")
+                    f"Cannot remove {enclosure.name}."
+                    f" Enclosure is assigned to a related"
+                    f" daily routine: {routine_dependencies}")
                 allow_remove_enclosure = False
 
         # Dependency check enclosure is part of any current staff tasks
         if allow_remove_enclosure:
-            enc_dependencies = self.check_enclosure_dependencies_staff(enclosure)
+            enc_dependencies = self.__check_enclosure_dependencies_staff(enclosure)
             if enc_dependencies:
                 print(
-                    f"Cannot remove {enclosure.name}. Enclosure is assigned to a related staff task: {enc_dependencies}")
+                    f"Cannot remove {enclosure.name}."
+                    f" Enclosure is assigned to a"
+                    f" related staff task: {enc_dependencies}")
                 allow_remove_enclosure = False
 
         # Check if enclosure has occupants
         if enclosure.occupants:
-            print(f"Cannot remove enclosure. {enclosure.name} still has occupants!")
+            print(f"Cannot remove enclosure. {enclosure.name}"
+                  f" still has occupants!")
             allow_remove_enclosure = False
 
         if allow_remove_enclosure:
@@ -402,7 +427,7 @@ class Zoo:
             return True
         return False
 
-    def check_enclosure_dependencies_staff(self, enclosure):
+    def __check_enclosure_dependencies_staff(self, enclosure):
         """
         Check if enclosure is assigned to any staff.
 
@@ -423,7 +448,7 @@ class Zoo:
                         found_list.append(task.name)
         return ", ".join(found_list) if found_list else None
 
-    def check_routine_dependencies_enclosure(self, enclosure):
+    def __check_routine_dependencies_enclosure(self, enclosure):
         """
         Check if enclosure appears in any daily routine.
 
@@ -504,7 +529,8 @@ class Zoo:
         """
 
         if staff.add_task(task):
-            print(f"Task '{task.name}' added to {staff.name}'s official tasks.")
+            print(f"Task '{task.name}' added"
+                  f" to {staff.name}'s official tasks.")
 
     def remove_task(self, staff, task):
         """
@@ -521,24 +547,28 @@ class Zoo:
 
         # Dependency check task is part of any daily routine entries
         if allow_remove_task:
-            routine_dependencies = self.check_routine_dependencies_task(task)
+            routine_dependencies = self.__check_routine_dependencies_task(task)
             if routine_dependencies:
                 print(
-                    f"Cannot remove {task.name}. Task is assigned to a related daily routine: {routine_dependencies}")
+                    f"Cannot remove {task.name}. Task is"
+                    f" assigned to a related"
+                    f" daily routine: {routine_dependencies}")
                 allow_remove_task = False
 
         # Check task not already in staff tasks
         if allow_remove_task and task not in staff.tasks:
-            print(f"Task '{task.name}' is not listed in {staff.name}'s official tasks.")
+            print(f"Task '{task.name}' is not listed in"
+                  f" {staff.name}'s official tasks.")
             allow_remove_task = False
 
         if allow_remove_task:
             staff.remove_task(task)
-            print(f"Task '{task.name}' removed from {staff.name}'s official tasks.")
+            print(f"Task '{task.name}' removed from"
+                  f" {staff.name}'s official tasks.")
             return True
         return False
 
-    def check_routine_dependencies_task(self, check_task):
+    def __check_routine_dependencies_task(self, check_task):
         """
         Check if task appears in any daily routine.
 
@@ -612,7 +642,8 @@ class Zoo:
 
         # Check staff has task
         if task not in staff.tasks:
-            print(f"This task is not in {staff.name}'s official list of tasks.")
+            print(f"This task is not in {staff.name}'s"
+                  f" official list of tasks.")
             allow_add_to_routine = False
 
         if allow_add_to_routine:

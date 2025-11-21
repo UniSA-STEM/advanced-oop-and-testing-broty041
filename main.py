@@ -10,6 +10,7 @@ This is my own work as defined by the University's Academic Integrity Policy.
 # Import classes
 import animal
 from enclosure import Enclosure
+from report import Report, AnimalsBySpecies
 from zoo_operations import Zoo
 from staff import Staff
 import task
@@ -23,26 +24,48 @@ def start_zoo():
     zoo1 = Zoo("Zoop")
 
     # Animals
-    lion1 = animal.Lion("Athos", "Lion", 3, "Male", "Carnivore", "Mammal", "Savannah")
-    bird1 = animal.Bird("Birdy", "Galah", 10, "Female", "Omnivore", "Bird", "Amazon", 10)
-    bird2 = animal.Bird("Polly", "Toucan", 5, "Male", "Omnivore", "Bird", "Amazon", 10)
-    bird3 = animal.Bird("Pingu", "Penguin", 5, "Male", "Carnivore", "Bird", "Arctic", 10)
-    bird4 = animal.Bird("Sangief", "Galah", 4, "Male", "Omnivore", "Bird", "Amazon", 10)
-    fish1 = animal.Fish("Old Ironjaw", "Trout", 3, "Male", "Omnivore", "Fish", "Tropical", ["yellow", "blue"])
-    fish2 = animal.Fish("Old Ironjaw", "Killer whale", 3, "Male", "Omnivore", "Fish", "Arctic", ["black"])
+    lion1 = animal.Lion("Athos", "Lion", 3, "Male",
+                        "Carnivore", "Mammal",
+                        "Savannah")
+    bird1 = animal.Bird("Birdy", "Galah", 10,
+                        "Female", "Omnivore", "Bird",
+                        "Amazon", 10)
+    bird2 = animal.Bird("Polly", "Toucan", 5,
+                        "Male", "Omnivore", "Bird",
+                        "Amazon", 10)
+    bird3 = animal.Bird("Pingu", "Penguin", 5,
+                        "Male", "Carnivore", "Bird",
+                        "Arctic", 10)
+    bird4 = animal.Bird("Sangief", "Galah", 4,
+                        "Male", "Omnivore", "Bird",
+                        "Amazon", 10)
+    fish1 = animal.Fish("Old Ironjaw", "Trout", 3,
+                        "Male", "Omnivore", "Fish",
+                        "Tropical", ["yellow", "blue"])
+    fish2 = animal.Fish("Old Ironjaw", "Killer whale",
+                        3, "Male", "Omnivore",
+                        "Fish", "Arctic",
+                        ["black"])
 
     animals = [lion1, bird1, bird2, fish1, fish2, bird3, bird4]
 
     # Enclosures
-    lion_enc = Enclosure("Lion ENC 1", 2, "Savannah", "Mammal", "Empty")
-    bird_enc = Enclosure("Bird ENC 1", 50, "Amazon", "Bird", "Empty")
-    bird2_enc = Enclosure("Bird ENC 2", 50, "Arctic", "Bird", "Empty")
-    bird3_enc = Enclosure("Bird ENC 3", 50, "Amazon", "Bird", "Empty")
-    bird4_enc = Enclosure("Bird ENC 4", 50, "Savannah", "Bird", "Empty")
+    lion_enc = Enclosure("Lion ENC 1", 2, "Savannah",
+                         "Mammal", "Empty")
+    bird_enc = Enclosure("Bird ENC 1", 50, "Amazon",
+                         "Bird", "Empty")
+    bird2_enc = Enclosure("Bird ENC 2", 50, "Arctic",
+                          "Bird", "Empty")
+    bird3_enc = Enclosure("Bird ENC 3", 50, "Amazon",
+                          "Bird", "Empty")
+    bird4_enc = Enclosure("Bird ENC 4", 50, "Savannah",
+                          "Bird", "Empty")
 
-    fish_enc = Enclosure("Fish ENC 1", 100, "Tropical", "Fish", "Empty")
+    fish_enc = Enclosure("Fish ENC 1", 100, "Tropical",
+                         "Fish", "Empty")
 
-    enclosures = [lion_enc, bird_enc, fish_enc, bird2_enc, bird3_enc, bird4_enc]
+    enclosures = [lion_enc, bird_enc, fish_enc, bird2_enc,
+                  bird3_enc, bird4_enc]
 
     # Staff
     zk1 = Staff("Bobbery", "Zoo keeper", "Savannah")
@@ -51,19 +74,31 @@ def start_zoo():
     staff_list = [zk1, vet1]
 
     # Tasks
-    feed_lion_enc = task.Feed("Feeding lions", "Feeding lions at the lion enclosure", ["Veterinarian", "Zoo keeper"],
+    feed_lion_enc = task.Feed("Feeding lions",
+                              "Feeding lions at the lion enclosure",
+                              ["Veterinarian", "Zoo keeper"],
                               lion_enc)
-    clean_lion_enc = task.Feed("Cleaning lion enclosure", "Cleaning the lion enclosure", ["Veterinarian", "Zoo keeper"],
+    clean_lion_enc = task.Clean("Cleaning lion enclosure",
+                               "Cleaning the lion enclosure",
+                               ["Veterinarian", "Zoo keeper"],
                                lion_enc)
-    feed_bird_enc = task.Feed("Feeding birds", "Feeding birds at the bird enclosure", ["Veterinarian", "Zoo keeper"],
+    feed_bird_enc = task.Feed("Feeding birds",
+                              "Feeding birds at the bird enclosure",
+                              ["Veterinarian", "Zoo keeper"],
                               bird_enc)
-    feed_fish_enc = task.Feed("Feeding fish", "Feeding fish at the fish enclosure", ["Veterinarian", "Zoo keeper"],
+    feed_fish_enc = task.Feed("Feeding fish",
+                              "Feeding fish at the fish enclosure",
+                              ["Veterinarian", "Zoo keeper"],
                               fish_enc)
-    surgery = task.Surgery("Surgery", "Performs surgery.", ["Veterinarian"], animal=lion1)
-    health_check_lion1 = task.HealthCheck("Health check", "Performs health check on lion.", ["Veterinarian"],
+    surgery = task.Surgery("Surgery", "Performs surgery.",
+                           ["Veterinarian"], animal=lion1)
+    health_check_lion1 = task.HealthCheck("Health check",
+                                "Performs health check on lion.",
+                                ["Veterinarian"],
                                           animal=lion1)
 
-    tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1]
+    tasks = [feed_lion_enc, feed_bird_enc, feed_fish_enc,
+             surgery, clean_lion_enc, health_check_lion1]
 
     return zoo1, animals, enclosures, staff_list, tasks
 
@@ -199,7 +234,8 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate staff methods."""
     lion1, bird1, bird2, fish1, fish2, bird3, bird4 = animals
     lion_enc, bird_enc, fish_enc, bird2_enc, bird3_enc, bird4_enc = enclosures
-    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
+    (feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery,
+     clean_lion_enc, health_check_lion1) = tasks
     zk1, vet1 = staff_list
 
     print(f"\n--- Demonstrating managing staff members. ---")
@@ -232,7 +268,12 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     zoo.assign_staff_enclosure(zk1, lion_enc)
     zoo.add_task(zk1, clean_lion_enc)
     zoo.add_task(zk1, feed_lion_enc)
+    print(lion_enc.clean)
     zk1.perform_task(clean_lion_enc)
+    print(lion_enc.clean)
+    lion_enc.clean = 7
+    zk1.perform_task(clean_lion_enc)
+    print(lion_enc.clean)
 
     print(f"\n--- Staff speciality matches enclosure environment. ---")
     zoo.add_enclosure(bird4_enc)
@@ -250,7 +291,9 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     zoo.add_task(vet1, feed_lion_enc)
     zoo.add_task(vet1, surgery)
     vet1.perform_task(surgery)
-    zoo.generate_health_record(lion1, "Appendicitis", "Injury", "03/11/25", "Active", 2, "Surgery", "Ate shoe.")
+    zoo.generate_health_record(lion1, "Appendicitis",
+                               "Injury", "03/11/25",
+                               "Active", 2, "Surgery", "Ate shoe.")
     vet1.perform_task(surgery)
 
     print(f"\n--- Zoo keeper feed animals ---")
@@ -268,7 +311,9 @@ def managing_staff(zoo, animals, enclosures, staff_list, tasks):
     print(lion_enc.clean)
 
     print(f"\n--- Vet performs health check ---")
-    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury", "03/11/25", "Active", 3, "Belly rubs.", "Ate peanuts.")
+    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury",
+                               "03/11/25", "Active", 3, "Belly rubs.",
+                               "Ate peanuts.")
     vet1.perform_task(health_check_lion1)
     zoo.add_task(vet1, health_check_lion1)
     vet1.perform_task(health_check_lion1)
@@ -292,9 +337,14 @@ def health_record_system(zoo, animals, enclosures, staff_list, tasks):
     lion1, bird1, bird2, fish1, fish2, bird3, bird4 = animals
 
     print(f"\n--- Demonstrating health records. ---")
-    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury", "03/11/25", "Active", 3, "Belly rubs.", "Ate peanuts.")
-    zoo.generate_health_record(lion1, "Runny nose", "Illness", "04/11/25", "Active", 2, "Vicks rubs.", "Needs tissues.")
-    zoo.generate_health_record(bird1, "Swooping", "Behavioural", "04/11/25", "Active", 3, "Cold water.",
+    zoo.generate_health_record(lion1, "Rumbly tummy", "Injury",
+                               "03/11/25", "Active", 3, "Belly rubs.",
+                               "Ate peanuts.")
+    zoo.generate_health_record(lion1, "Runny nose", "Illness",
+                               "04/11/25", "Active", 2, "Vicks rubs.",
+                               "Needs tissues.")
+    zoo.generate_health_record(bird1, "Swooping", "Behavioural",
+                               "04/11/25", "Active", 3, "Cold water.",
                                "Aggressively swooping visitors.")
 
 
@@ -317,14 +367,19 @@ def generate_reports(zoo, animals, enclosures, staff_list, tasks):
     zoo.assign_animal(lion1, lion_enc)
     zoo.add_animal(fish1)
 
-    zoo.display_report_interface()
+    # To run the interactive report menu uncomment the line below and
+    # comment the for loop code :)
+    # zoo.display_report_interface()
+    for report in zoo.reports.reports:
+        report.generate_report(zoo)
 
 
 def dependency_checking(zoo, animals, enclosures, staff_list, tasks):
     """Demonstrate dependency checking."""
-    lion1, bird1, bird2, fish1, fish2, bird3, bird4 = animals
+    (lion1, bird1, bird2, fish1, fish2, bird3, bird4) = animals
     lion_enc, bird_enc, fish_enc, bird2_enc, bird3_enc, bird4_enc = enclosures
-    feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc, health_check_lion1 = tasks
+    (feed_lion_enc, feed_bird_enc, feed_fish_enc, surgery, clean_lion_enc,
+     health_check_lion1) = tasks
     zk1, vet1 = staff_list
 
     print(f"\n--- Demonstrating dependency checking of tasks. ---")
@@ -364,7 +419,7 @@ def dependency_checking(zoo, animals, enclosures, staff_list, tasks):
     zoo.remove_task(zk1, feed_lion_enc)
     zoo.remove_enclosure(lion_enc)
 
-    print(f"\n--- Removing task with related dailyroutine ---")
+    print(f"\n--- Removing task with related daily routine ---")
     zoo.add_task(vet1, surgery)
     zoo.add_to_routine(vet1, surgery, "Monday")
     zoo.remove_task(vet1, surgery)

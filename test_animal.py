@@ -75,12 +75,14 @@ def test_update_movability(dummy_animal_lion, dummy_health_record):
     dummy_animal_lion.movable = True
     dummy_animal_lion.update_movability()
     assert dummy_animal_lion.movable == True
-    dummy_animal_lion.add_health_record("Leo1", dummy_health_record)
+    dummy_animal_lion.add_health_record("Leo1",
+                                        dummy_health_record)
     assert dummy_animal_lion.movable == False
 
 def test_add_health_record(dummy_animal_lion, dummy_health_record):
     """Test method adds a health record."""
-    dummy_animal_lion.add_health_record("Leo1", dummy_health_record)
+    dummy_animal_lion.add_health_record("Leo1",
+                                        dummy_health_record)
     assert len(dummy_animal_lion.record) == 1
     assert "Leo1" in dummy_animal_lion.record
 
@@ -97,7 +99,8 @@ def test_adjust_status_after_surgery(dummy_animal_lion, dummy_health_record):
 
 def test_check_health(dummy_health_record, dummy_animal_lion):
     """Test that check health decreases severity."""
-    dummy_animal_lion.add_health_record("Leo1", dummy_health_record)
+    dummy_animal_lion.add_health_record("Leo1",
+                                        dummy_health_record)
     dummy_animal_lion.check_health()
     assert dummy_health_record.severity == 2
 

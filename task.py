@@ -174,3 +174,31 @@ class HealthCheck(Task):
 
         # Logic done by the animal
         self.animal.check_health()
+
+
+class Clean(Task):
+    """
+    Clean allows staff to clean enclosures that get dirty from animals.
+
+    Methods
+    -------
+    perform_action():
+        Performs cleaning of an enclosure.
+    """
+
+    def __init__(self, name, description, roles,
+                 assigned_enclosure=None, animal=None):
+        super().__init__(name, description, roles,
+                         assigned_enclosure, animal)
+
+    def perform_action(self):
+        """
+        Performs cleaning of an enclosure.
+
+            Parameters:
+                None
+
+            Returns:
+                None: (Calls animal's check_health() method.)
+        """
+        self.enclosure.clean_enclosure()

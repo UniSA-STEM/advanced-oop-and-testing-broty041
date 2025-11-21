@@ -54,7 +54,8 @@ class Animal(ABC):
             Performs health check and updates records.
     """
 
-    def __init__(self, name, species, age, gender, diet, animal_class, environment):
+    def __init__(self, name, species, age, gender, diet,
+                 animal_class, environment):
         self.__name = name
         self.__species = species
         self.__age = age
@@ -137,7 +138,10 @@ class Animal(ABC):
             if v.status == "Active" and v.severity > 2:
                 if self.movable:
                     self.movable = False
-                    print(f"{self.name} is {'not movable' if self.movable is False else 'movable'} due to '{v.description}' - {v.date}")
+                    print(f"{self.name} is "
+                          f"{'not movable' if self.movable 
+                                              is False else 'movable'}"
+                          f" due to '{v.description}' - {v.date}")
 
     def add_health_record(self, new_record_id: object, record: object) -> None:
         """
@@ -202,6 +206,7 @@ class Animal(ABC):
             print(f"{self.name} has no further issues. "
                   f"Vet has concluded health check.")
 
+
     def __str__(self):
         return (f"Animal Class: {self.__animal_class}"
                 f"\nSpecies: {self.__species}"
@@ -212,6 +217,7 @@ class Animal(ABC):
 
 
 class Lion(Animal):
+    """Lion inherits animal behaviour and adds alpha status behaviour."""
     def __init__(self, name, species, age, gender,
                  diet, animal_class, environment):
         super().__init__(name, species, age, gender,
@@ -238,8 +244,11 @@ class Lion(Animal):
 
 
 class Bird(Animal):
-    def __init__(self, name, species, age, gender, diet, animal_class, environment, wing_span):
-        super().__init__(name, species, age, gender, diet, animal_class, environment)
+    """Bird inherits animal behaviour and adds wing-span behaviour."""
+    def __init__(self, name, species, age, gender, diet,
+                 animal_class, environment, wing_span):
+        super().__init__(name, species, age, gender, diet,
+                         animal_class, environment)
         self.__wing_span = wing_span
 
     def cry(self):
@@ -256,15 +265,19 @@ class Bird(Animal):
         print("Pecks at the food.")
 
     def sleep(self):
-        print(f"{self.name} tucks its head between its feathers and heads off to noddy land.")
+        print(f"{self.name} tucks its head between its feathers"
+              f" and heads off to noddy land.")
 
     def __str__(self):
         return super().__str__() + f"\nWing span: {self.__wing_span}cm"
 
 
 class Fish(Animal):
-    def __init__(self, name, species, age, gender, diet, animal_class, environment, scale_colours):
-        super().__init__(name, species, age, gender, diet, animal_class, environment)
+    """Fish inherits animal behaviour and adds scale-colour description."""
+    def __init__(self, name, species, age, gender, diet, animal_class,
+                 environment, scale_colours):
+        super().__init__(name, species, age, gender, diet, animal_class,
+                         environment)
         self.__scale_colours = scale_colours
 
     def cry(self):

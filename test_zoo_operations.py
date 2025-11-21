@@ -124,10 +124,17 @@ def dummy_health_record(dummy_animal_lion):
 
 
 def test_find_animal(dummy_zoo, dummy_animal_lion):
-    """Test if animal is found with find method."""
+    """
+    Test if animal is found with find method and that invalid entry returns
+    a type error.
+    """
     dummy_zoo.add_animal(dummy_animal_lion)
     found = dummy_zoo.find_animal(dummy_animal_lion)
     assert found == dummy_animal_lion
+    with pytest.raises(TypeError):
+        dummy_zoo.find_animal(123)
+
+
 
 def test_list_animals(dummy_zoo, dummy_animal_lion):
     """Test listing animals method runs."""
@@ -143,7 +150,9 @@ def test_remove_animal(dummy_zoo, dummy_animal_lion, dummy_enclosure):
     dummy_zoo.assign_animal(dummy_animal_lion, dummy_enclosure)
     assert dummy_zoo.remove_animal(dummy_animal_lion, dummy_enclosure) is True
 
-def test_check_routine_dependencies_animal(dummy_zoo, dummy_vet, dummy_animal_lion, dummy_enclosure, dummy_surgery_task):
+def test_check_routine_dependencies_animal(dummy_zoo, dummy_vet,
+                                           dummy_animal_lion, dummy_enclosure,
+                                           dummy_surgery_task):
     """Test animal cannot be removed if it has related daily routine."""
     dummy_zoo.add_staff(dummy_vet)
     dummy_zoo.add_animal(dummy_animal_lion)
@@ -152,16 +161,20 @@ def test_check_routine_dependencies_animal(dummy_zoo, dummy_vet, dummy_animal_li
     dummy_zoo.assign_staff_enclosure(dummy_vet, dummy_enclosure)
     dummy_zoo.add_task(dummy_vet, dummy_surgery_task)
     dummy_zoo.add_to_routine(dummy_vet, dummy_surgery_task, "Monday")
-    assert dummy_zoo.remove_animal(dummy_animal_lion, dummy_enclosure) is False
+    assert dummy_zoo.remove_animal(dummy_animal_lion,
+                                   dummy_enclosure) is False
 
-def test_check_animal_dependencies_staff(dummy_zoo, dummy_vet, dummy_animal_lion, dummy_enclosure, dummy_surgery_task):
+def test_check_animal_dependencies_staff(dummy_zoo,
+                                         dummy_vet, dummy_animal_lion,
+                                         dummy_enclosure, dummy_surgery_task):
     """Test animal cannot be removed if it has related staff task."""
     dummy_zoo.add_staff(dummy_vet)
     dummy_zoo.add_animal(dummy_animal_lion)
     dummy_zoo.add_enclosure(dummy_enclosure)
     dummy_zoo.assign_staff_enclosure(dummy_vet, dummy_enclosure)
     dummy_zoo.add_task(dummy_vet, dummy_surgery_task)
-    assert dummy_zoo.remove_animal(dummy_animal_lion, dummy_enclosure) is False
+    assert dummy_zoo.remove_animal(dummy_animal_lion,
+                                   dummy_enclosure) is False
 
 def test_assign_animal(dummy_zoo, dummy_animal_lion, dummy_enclosure):
     """Test assigning animals to enclosure."""
@@ -176,13 +189,15 @@ def test_unassign_animal(dummy_zoo, dummy_animal_lion, dummy_enclosure):
     dummy_zoo.assign_animal(dummy_animal_lion, dummy_enclosure)
     dummy_zoo.unassign_animal(dummy_animal_lion, dummy_enclosure)
 
-def test_move_animal(dummy_zoo, dummy_animal_lion, dummy_enclosure, dummy_enclosure2):
+def test_move_animal(dummy_zoo, dummy_animal_lion, dummy_enclosure,
+                     dummy_enclosure2):
     """Test moving animal between enclosure."""
     dummy_zoo.add_animal(dummy_animal_lion)
     dummy_zoo.add_enclosure(dummy_enclosure)
     dummy_zoo.add_enclosure(dummy_enclosure2)
     dummy_zoo.assign_animal(dummy_animal_lion, dummy_enclosure)
-    assert dummy_zoo.move_animal(dummy_animal_lion, dummy_enclosure, dummy_enclosure2) is True
+    assert dummy_zoo.move_animal(dummy_animal_lion, dummy_enclosure,
+                                 dummy_enclosure2) is True
 
 def test_add_enclosure(dummy_zoo, dummy_enclosure):
     """Test adding enclosures to zoo runs."""
@@ -193,7 +208,11 @@ def test_remove_enclosure(dummy_zoo, dummy_enclosure):
     dummy_zoo.add_enclosure(dummy_enclosure)
     assert dummy_zoo.remove_enclosure(dummy_enclosure) is True
 
-def test_check_enclosure_dependencies_staff(dummy_zoo, dummy_zookeeper, dummy_animal_lion, dummy_enclosure, dummy_feed_task):
+def test_check_enclosure_dependencies_staff(dummy_zoo,
+                                            dummy_zookeeper,
+                                            dummy_animal_lion,
+                                            dummy_enclosure,
+                                            dummy_feed_task):
     """Test enclosure cannot be removed if it has related daily routine."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_animal(dummy_animal_lion)
@@ -202,7 +221,11 @@ def test_check_enclosure_dependencies_staff(dummy_zoo, dummy_zookeeper, dummy_an
     dummy_zoo.add_task(dummy_zookeeper, dummy_feed_task)
     assert dummy_zoo.remove_enclosure(dummy_enclosure) is False
 
-def test_check_routine_dependencies_enclosure(dummy_zoo, dummy_zookeeper, dummy_animal_lion, dummy_enclosure, dummy_feed_task):
+def test_check_routine_dependencies_enclosure(dummy_zoo,
+                                              dummy_zookeeper,
+                                              dummy_animal_lion,
+                                              dummy_enclosure,
+                                              dummy_feed_task):
     """Test enclosure cannot be removed if it has related staff task."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_animal(dummy_animal_lion)
@@ -236,34 +259,40 @@ def test_remove_task(dummy_zoo, dummy_zookeeper, dummy_feed_task):
     dummy_zoo.add_task(dummy_zookeeper, dummy_feed_task)
     assert dummy_zoo.remove_task(dummy_zookeeper, dummy_feed_task) is False
 
-def test_check_routine_dependencies_task(dummy_zoo, dummy_zookeeper, dummy_feed_task):
+def test_check_routine_dependencies_task(dummy_zoo, dummy_zookeeper,
+                                         dummy_feed_task):
     """Test task cannot be removed if it is also in daily routine."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_task(dummy_zookeeper, dummy_feed_task)
     dummy_zoo.add_to_routine(dummy_zookeeper, dummy_feed_task, "Monday")
     assert dummy_zoo.remove_task(dummy_zookeeper, dummy_feed_task) is False
 
-def test_assign_staff_enclosure(dummy_zoo, dummy_zookeeper, dummy_enclosure):
+def test_assign_staff_enclosure(dummy_zoo, dummy_zookeeper,
+                                dummy_enclosure):
     """Test assign staff enclosure method runs."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_enclosure(dummy_enclosure)
 
-def test_unassign_staff_enclosure(dummy_zoo, dummy_zookeeper, dummy_enclosure):
+def test_unassign_staff_enclosure(dummy_zoo, dummy_zookeeper,
+                                  dummy_enclosure):
     """Test unassign staff enclosure method runs."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_enclosure(dummy_enclosure)
     dummy_zoo.assign_staff_enclosure(dummy_zookeeper, dummy_enclosure)
     dummy_zoo.unassign_staff_enclosure(dummy_zookeeper, dummy_enclosure)
 
-def test_add_to_routine(dummy_zoo, dummy_zookeeper, dummy_feed_task, dummy_enclosure):
+def test_add_to_routine(dummy_zoo, dummy_zookeeper, dummy_feed_task,
+                        dummy_enclosure):
     """Test staff task can be added to daily routine."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_enclosure(dummy_enclosure)
     dummy_zoo.assign_staff_enclosure(dummy_zookeeper, dummy_enclosure)
     dummy_zoo.add_task(dummy_zookeeper, dummy_feed_task)
-    assert dummy_zoo.add_to_routine(dummy_zookeeper, dummy_feed_task, "Monday") is True
+    assert dummy_zoo.add_to_routine(dummy_zookeeper, dummy_feed_task,
+                                    "Monday") is True
 
-def test_clear_routines(dummy_zoo, dummy_zookeeper, dummy_feed_task, dummy_enclosure):
+def test_clear_routines(dummy_zoo, dummy_zookeeper, dummy_feed_task,
+                        dummy_enclosure):
     """Test clear routines method runs."""
     dummy_zoo.add_staff(dummy_zookeeper)
     dummy_zoo.add_enclosure(dummy_enclosure)

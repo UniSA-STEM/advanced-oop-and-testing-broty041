@@ -24,7 +24,7 @@ class Enclosure:
     __environment : str
         The enclosures environment theme ('Savannah', 'Aquatic').
     __cleanliness : int
-        Condition of enclosure (1–10 scale).
+        Condition of enclosure (1–10 scale, 10 is perfectly cleaned).
     __enclosure_class : str
         Biological class enclosure supports.
     __enclosure_status : str
@@ -50,9 +50,12 @@ class Enclosure:
             Remove an animal from enclosure.
         unassign_all_animals():
             Remove all animals from enclosure.
+        clean_enclosure():
+            Cleans the enclosure back to perfect.
     """
 
-    def __init__(self, name, size, environment, enclosure_class, enclosure_status):
+    def __init__(self, name, size, environment,
+                 enclosure_class, enclosure_status):
         self.__name = name
         self.__size = size
         self.__environment = environment
@@ -136,7 +139,8 @@ class Enclosure:
 
         # Check if enclosure can hold this animal class
         if animal.animal_class != self.enclosure_class:
-            print(f"{animal.animal_class}s cannot be housed in {self.enclosure_class} enclosures.")
+            print(f"{animal.animal_class}s cannot be"
+                  f" housed in {self.enclosure_class} enclosures.")
             accept_animal = False
 
         # Check environments match animal, ie no tropical birds with penguins
@@ -180,6 +184,24 @@ class Enclosure:
                   f"after feeding time.")
             return True
         return False
+
+    def clean_enclosure(self):
+        """
+        Clean the enclosure by resetting cleanliness level.
+
+            Parameters:
+                None
+
+            Returns:
+                None. (Sets enclosure cleanliness to 10)
+        """
+        if self.clean == 10:
+            print(f"{self.name} is already perfectly clean.")
+            return False
+        else:
+            self.clean = 10
+            print(f"{self.name} is now perfectly clean.")
+            return True
 
     def list_enc_animals(self):
         """
@@ -276,7 +298,7 @@ class Enclosure:
             self.__occupants.remove(animal)
             print(f"{animal.name} unassigned from {self.name}. "
                   f"Now in holding pen.")
-            "Set occupants status to Empty if no animals."
+            # Set occupants status to Empty if no animals.
             if len(self.occupants) == 0:
                 self.status = "Empty"
             return True

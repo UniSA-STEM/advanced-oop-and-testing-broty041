@@ -85,9 +85,17 @@ def test_remove_occupant(dummy_enclosure, dummy_animal_lion):
     assert result == True
     assert dummy_enclosure.status == "Empty"
 
-def test_unassign_all_animals(dummy_enclosure, dummy_animal_lion, dummy_animal_lion2):
+def test_unassign_all_animals(dummy_enclosure, dummy_animal_lion,
+                              dummy_animal_lion2):
     """Test removing all occupants from enclosure."""
     dummy_enclosure.add_occupant(dummy_animal_lion)
     dummy_enclosure.add_occupant(dummy_animal_lion2)
     dummy_enclosure.unassign_all_animals()
     assert dummy_enclosure.occupants == []
+
+def test_clean_enclosure(dummy_enclosure):
+    dummy_enclosure.clean = 7
+    assert dummy_enclosure.clean == 7
+    dummy_enclosure.clean_enclosure()
+    assert dummy_enclosure.clean == 10
+
